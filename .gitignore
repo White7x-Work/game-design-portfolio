@@ -1,0 +1,13 @@
+# 构建与预览产物
+dist/
+*.log
+
+# 本地工具链临时文件
+_build/
+node_modules/
+.edge-profile/
+
+# Word 锁文件与暂存稿
+~$*
+*_pending.docx
+*.tmp
