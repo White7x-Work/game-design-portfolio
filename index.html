@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>许云翔 · 游戏作品集</title>
+<style>
+  :root {
+    --bg: #0f1116;
+    --card: #171a21;
+    --card-hover: #1e222b;
+    --line: #262b36;
+    --text: #e8eaef;
+    --muted: #9aa3b2;
+    --accent: #6ea8fe;
+    --accent-2: #8ce99a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: radial-gradient(1200px 600px at 20% -10%, #1b2233 0%, var(--bg) 55%);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", "Microsoft YaHei", "PingFang SC", sans-serif;
+    min-height: 100vh;
+    padding: 64px 24px 80px;
+    line-height: 1.65;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header h1 { font-size: 30px; margin: 0 0 8px; letter-spacing: .5px; }
+  header p { color: var(--muted); margin: 0 0 40px; font-size: 15px; }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  a.card {
+    display: block; text-decoration: none; color: inherit;
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 22px 22px 20px; transition: .18s ease;
+  }
+  a.card:hover { background: var(--card-hover); border-color: #3a4356; transform: translateY(-2px); }
+  .card h2 { font-size: 19px; margin: 0 0 4px; }
+  .card .tag {
+    display: inline-block; font-size: 12px; color: var(--accent);
+    border: 1px solid #2c3a52; background: #141c29;
+    padding: 1px 8px; border-radius: 999px; margin-bottom: 10px;
+  }
+  .card p { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+  .card .go { font-size: 13px; color: var(--accent-2); }
+  .links { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 18px; font-size: 14px; }
+  .links a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+  .links a:hover { border-bottom-color: var(--accent); }
+  footer { margin-top: 48px; color: #6b7486; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>许云翔 · 游戏作品集</h1>
+    <p>三款可玩的 H5 小游戏与一份系统拆解。点开即玩，无需安装。</p>
+  </header>
+
+  <div class="grid">
+    <a class="card" href="./tail-zoo/">
+      <span class="tag">可玩 · 单文件 110KB</span>
+      <h2>尾巴动物园 Tail Zoo</h2>
+      <p>贪吃蛇 × 动物收服 × 肉鸽三选一。碰到的每只动物都会挂在身后，提供被动、也让你更危险。</p>
+      <span class="go">进入游戏 →</span>
+    </a>
+
+    <a class="card" href="./nonogram/">
+      <span class="tag">可玩 · 50 关 + 每日一题</span>
+      <h2>数织异化 Nonogram Mutations</h2>
+      <p>数织（绘图方块）的规则异化：彩色多值、对角线线索、形状剪影。全部关卡唯一解校验。</p>
+      <span class="go">进入游戏 →</span>
+    </a>
+  </div>
+
+  <div class="links">
+    <a href="https://github.com/White7x-Work/game-design-portfolio">源码与设计文档</a>
+    <a href="https://github.com/White7x-Work/game-design-portfolio/blob/master/zzz-teardown/%E7%BB%9D%E5%8C%BA%E9%9B%B6%E6%B8%B8%E6%88%8F%E6%8B%86%E8%A7%A3%E6%A1%88.md">《绝区零》系统拆解</a>
+  </div>
+
+  <footer>操作提示：尾巴动物园支持 WASD / 方向键与滑动；数织支持点按、拖动连涂、长按打 X。</footer>
+</div>
+</body>
+</html>
