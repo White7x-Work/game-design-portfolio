@@ -1,0 +1,58 @@
+name: Deploy playable site
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build nonogram (tsc)
+        working-directory: nonogram-mutations
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site/tail-zoo _site/nonogram
+          cp site/index.html _site/index.html
+          cp tail-zoo/index.html _site/tail-zoo/index.html
+          cp nonogram-mutations/index.html nonogram-mutations/styles.css _site/nonogram/
+          cp -r nonogram-mutations/build _site/nonogram/build
+          du -sh _site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
