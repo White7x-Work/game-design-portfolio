@@ -21,6 +21,7 @@
     --danger:#ef476f;
     --purple:#b79cff;
     --playw: min(94vw, calc(100dvh - 200px), 720px);
+    --dpad-cell: clamp(52px, 15.5vw, 68px);
     --shadow: 0 5px 0 rgba(43,43,60,.16);
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -61,7 +62,13 @@
     position:relative;
     z-index:1;
   }
-  #app.with-dpad{--playw: min(94vw, calc(100dvh - 336px), 720px);}
+  #app.with-dpad{
+    --playw: min(
+      94vw,
+      calc(100dvh - 168px - 3 * var(--dpad-cell) - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)),
+      720px
+    );
+  }
 
   /* ---------- HUD ---------- */
   #topbar{
@@ -134,6 +141,16 @@
   #toast.bad{background:var(--danger);}
   #toast.good{background:var(--leaf);}
   #toast.gold{background:#b8860b;}
+  #tapToast{
+    position:fixed;left:50%;bottom:max(26px,env(safe-area-inset-bottom));
+    transform:translate(-50%,12px);z-index:99;
+    background:rgba(43,43,60,.94);color:#fff;
+    padding:9px 17px;border-radius:99px;border:2px solid #fff;
+    font-size:13px;font-weight:800;line-height:1.4;text-align:center;max-width:86vw;
+    opacity:0;pointer-events:none;transition:opacity .18s, transform .18s;
+    box-shadow:0 5px 0 rgba(43,43,60,.25);
+  }
+  #tapToast.show{opacity:1;transform:translate(-50%,0);}
 
   /* ---------- Collection / Buff bar ---------- */
   #underbar{width:var(--playw);flex:0 0 auto;display:flex;flex-direction:column;gap:4px;}
@@ -181,6 +198,14 @@
   .btn.big{padding:14px 34px;font-size:19px;border-radius:18px;letter-spacing:.5px;}
   .btn.small{padding:7px 13px;font-size:12px;box-shadow:0 3px 0 rgba(43,43,60,.2);}
   .btn:focus-visible,.icon-btn:focus-visible,.card:focus-visible{outline:3px solid var(--sky);outline-offset:3px;}
+  .btn.ad{background:linear-gradient(180deg,#8be08b,#4dbb68);color:#fff;text-shadow:0 1px 0 rgba(0,60,20,.18);}
+  .btn.ad:hover{background:linear-gradient(180deg,#98e898,#57c573);}
+  .btn.ad::before{content:"▶";font-size:.78em;margin-right:7px;opacity:.9;}
+  .btn.ad:disabled{opacity:.62;transform:none;cursor:default;}
+  .ad-revive{width:100%;margin:2px 0 11px;}
+  .rank-note{min-height:16px;margin-top:7px;font-size:12px;line-height:1.35;text-align:center;color:#7a7a90;}
+  .rank-note.good{color:var(--leaf);font-weight:700;}
+  .rank-note.bad{color:var(--danger);font-weight:700;}
   .row{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;align-items:center;}
 
   /* ---------- Screens ---------- */
@@ -286,25 +311,26 @@
   .stat b{display:block;font-size:17px;line-height:1.2;}
   .species-summary{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;margin-bottom:10px;}
   .species-tag{font-size:9px;font-weight:900;background:#fff;border:2px solid var(--ink);border-radius:99px;padding:1px 6px;}
-  .gameover-panel .row .btn{flex:1;}
+  .gameover-panel .row .btn{flex:1;min-width:0;padding:10px 8px;font-size:14px;white-space:nowrap;}
 
   /* ---------- D-pad ---------- */
   #dpad{
     position:relative;z-index:5;flex:0 0 auto;
-    display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(3,42px);gap:3px;
-    margin-left:auto;margin-right:calc((100% - var(--playw)) / 2);
-    opacity:.78;
+    display:grid;grid-template-columns:repeat(3, var(--dpad-cell));grid-template-rows:repeat(3, var(--dpad-cell));gap:6px;
+    margin:0 auto;
+    opacity:.92;
   }
   #dpad.inactive{visibility:hidden;pointer-events:none;}
   .dpad-btn{
-    display:grid;place-items:center;border:2.5px solid var(--ink);border-radius:12px;
-    background:rgba(255,248,231,.9);box-shadow:0 3px 0 rgba(43,43,60,.2);
-    font-size:16px;font-weight:900;cursor:pointer;
+    display:grid;place-items:center;border:2.5px solid var(--ink);border-radius:16px;
+    background:rgba(255,248,231,.94);box-shadow:0 4px 0 rgba(43,43,60,.2);
+    font-size:clamp(19px, 5.2vw, 25px);font-weight:900;line-height:1;cursor:pointer;
+    touch-action:none;-webkit-user-select:none;user-select:none;
   }
   .dpad-btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(43,43,60,.2);background:var(--gold);}
   #dpadUp{grid-column:2;grid-row:1;} #dpadLeft{grid-column:1;grid-row:2;}
   #dpadRight{grid-column:3;grid-row:2;} #dpadDown{grid-column:2;grid-row:3;}
-  #dpadCenter{grid-column:2;grid-row:2;border:none;background:transparent;box-shadow:none;font-size:9px;opacity:.4;cursor:default;}
+  #dpadCenter{grid-column:2;grid-row:2;border:none;background:transparent;box-shadow:none;font-size:10px;opacity:.4;cursor:default;}
 
   /* ---------- Debug ---------- */
   #debugPanel{
@@ -344,6 +370,8 @@
     #collection{padding:3px 4px;}
     .species-slot{max-width:28px;}
     .buff-chip{font-size:9px;padding:0 5px;}
+    .title-actions .row .btn{padding:9px 9px;font-size:13px;}
+    .ad-revive{font-size:14px;}
   }
   @media (max-width:380px){
     .best{display:none;}
@@ -434,6 +462,7 @@
       <button class="btn primary big" id="btnStart">开始游戏</button>
       <div class="row">
         <button class="btn ghost" id="btnHowto">玩法说明</button>
+        <button class="btn ghost" id="btnRankTitle">排行榜</button>
         <button class="btn ghost" id="btnSoundTitle">音效：开</button>
       </div>
     </div>
@@ -442,7 +471,6 @@
       <label><input type="checkbox" id="chkShake" checked> 震屏</label>
       <label><input type="checkbox" id="chkDpad" checked> 虚拟方向键</label>
     </div>
-    <div class="tiny-note">单文件 · 离线可玩 · 键盘 / 触屏</div>
   </div>
 </section>
 
@@ -501,14 +529,18 @@
       <div class="stat"><span>获得能力</span><b id="statBuffs">0</b></div>
     </div>
     <div class="species-summary" id="speciesSummary"></div>
+    <button class="btn ad ad-revive hidden" id="btnReviveAd">看视频复活</button>
     <div class="row">
       <button class="btn primary" id="btnAgain">再来一局</button>
+      <button class="btn ghost" id="btnRankOver">排行榜</button>
       <button class="btn ghost" id="btnToTitle">返回标题</button>
     </div>
+    <div class="rank-note" id="rankNote"></div>
     <div class="tiny-note">最佳 <span id="bestGameover">0</span> 分</div>
   </div>
 </section>
 
+<div id="tapToast" role="status" aria-live="polite"></div>
 <div id="debugPanel" class="hidden"></div>
 
 <script>
@@ -516,10 +548,188 @@
 'use strict';
 
 /* ============================================================
+   00. TAPTAP PLATFORM —— 排行榜 / 激励视频广告接入层
+   ============================================================
+   · SDK 无需安装：tap 是 TapTap 小游戏宿主注入的全局对象
+   · 排行榜：tap.getLeaderboardManager() → submitScores / openLeaderboard
+   · 广告：激励视频「看广告复活」，广告位 1054324（竖屏）
+   · 普通浏览器里 tap 不存在，所有接口自动降级为提示，不抛错
+   · 本地联调：index.html?admock=1 模拟一次激励视频
+   ------------------------------------------------------------ */
+const AD_MOCK = new URLSearchParams(location.search).has('admock');
+
+const PLATFORM = {
+  appId: 1006350,
+  leaderboardId: 'xbzw2e4303k6c7uwqo',
+  // 由 MCP check_ads_status 按竖屏匹配返回，禁止手填
+  adSpaceId: '1054324',
+  adsEnabled: true,
+  mock: AD_MOCK,
+  get host() { return (typeof window !== 'undefined' && window.tap) || null; },
+  get inClient() { return !!this.host; },
+  get adsReady() {
+    return this.mock || (this.adsEnabled && !!this.adSpaceId && !!this.host);
+  }
+};
+
+function leaderboardManager() {
+  if (!PLATFORM.host) return null;
+  try {
+    if (typeof PLATFORM.host.getLeaderboardManager !== 'function') return null;
+    return PLATFORM.host.getLeaderboardManager();
+  } catch (e) {
+    return null;
+  }
+}
+
+function setRankNote(text, tone) {
+  if (!dom || !dom.rankNote) return;
+  dom.rankNote.textContent = text || '';
+  dom.rankNote.classList.remove('good', 'bad');
+  if (tone === 'good') dom.rankNote.classList.add('good');
+  else if (tone === 'bad') dom.rankNote.classList.add('bad');
+}
+
+/* 跨屏幕浮动提示：标题页 / 结算页都能看到 */
+let tapToastTimer = 0;
+function tapNotice(text) {
+  if (!dom || !dom.tapToast || !text) return;
+  dom.tapToast.textContent = text;
+  dom.tapToast.classList.add('show');
+  clearTimeout(tapToastTimer);
+  tapToastTimer = setTimeout(() => dom.tapToast.classList.remove('show'), 2600);
+}
+
+function submitScore(score, done) {
+  const value = Math.max(0, Math.floor(Number(score) || 0));
+  const finish = typeof done === 'function' ? done : function () {};
+  const lb = leaderboardManager();
+  if (!lb) { finish(false, 'no-host'); return; }
+  try {
+    lb.submitScores({
+      scores: [{ leaderboardId: PLATFORM.leaderboardId, score: value }],
+      callback: {
+        onSuccess: () => finish(true),
+        onFailure: (code, msg) => finish(false, msg || ('code ' + code))
+      }
+    });
+  } catch (e) {
+    finish(false, (e && e.message) || 'submit-failed');
+  }
+}
+
+function openLeaderboard() {
+  const lb = leaderboardManager();
+  if (!lb) {
+    tapNotice('排行榜需要在 TapTap 客户端内打开');
+    setRankNote('排行榜需要在 TapTap 客户端内打开', 'bad');
+    return false;
+  }
+  try {
+    lb.openLeaderboard({
+      leaderboardId: PLATFORM.leaderboardId,
+      collection: 'public',
+      callback: {
+        onSuccess: () => { setRankNote(''); },
+        onFailure: (code, msg) => {
+          const why = msg || ('错误码 ' + code);
+          setRankNote('排行榜打开失败：' + why, 'bad');
+          tapNotice('排行榜打开失败：' + why);
+        }
+      }
+    });
+    return true;
+  } catch (e) {
+    setRankNote('排行榜打开失败', 'bad');
+    tapNotice('排行榜打开失败，请稍后再试');
+    return false;
+  }
+}
+
+/* ============================================================
+   激励视频（广告位 1054324，由 MCP check_ads_status 竖屏匹配返回）
+   · 启动时预加载；show() 失败时 load() 后只重试一次
+   · 看完（res.isEnded）才算成功，提前关闭不发奖励
+   ------------------------------------------------------------ */
+const REWARD_TIMEOUT_MS = 15000;
+let rewardedAd = null;
+let rewardedWaiter = null;
+let rewardedTimer = 0;
+
+function settleRewarded(result) {
+  if (rewardedTimer) { clearTimeout(rewardedTimer); rewardedTimer = 0; }
+  const fn = rewardedWaiter;
+  rewardedWaiter = null;
+  if (typeof fn === 'function') fn(result);
+}
+
+function safeAdLoad(ad) {
+  try {
+    const p = ad.load();
+    if (p && typeof p.catch === 'function') p.catch(() => {});
+    return p;
+  } catch (e) {
+    return null;
+  }
+}
+
+function initRewardedAd() {
+  if (PLATFORM.mock) return null;
+  if (!PLATFORM.adsReady) return null;
+  if (rewardedAd) return rewardedAd;
+  const host = PLATFORM.host;
+  if (!host || typeof host.createRewardedVideoAd !== 'function') return null;
+  try {
+    rewardedAd = host.createRewardedVideoAd({ adUnitId: PLATFORM.adSpaceId });
+    rewardedAd.onLoad(() => {});
+    rewardedAd.onError(err => {
+      console.warn('[tailzoo] 激励视频错误', err && (err.errMsg || err.errCode));
+      settleRewarded({ ok: false, reason: 'ad-error' });
+    });
+    rewardedAd.onClose(res => {
+      const ended = !!(res && res.isEnded);
+      settleRewarded({ ok: ended, reason: ended ? 'ended' : 'closed-early' });
+      safeAdLoad(rewardedAd);
+    });
+    safeAdLoad(rewardedAd);
+    return rewardedAd;
+  } catch (e) {
+    rewardedAd = null;
+    return null;
+  }
+}
+
+function showRewarded(placement, done) {
+  const finish = typeof done === 'function' ? done : function () {};
+  if (PLATFORM.mock) {
+    setTimeout(() => finish({ ok: true, mock: true }), 1200);
+    return;
+  }
+  if (!PLATFORM.adsReady) { finish({ ok: false, reason: 'ad-not-ready' }); return; }
+  if (rewardedWaiter) { finish({ ok: false, reason: 'ad-busy' }); return; }
+  const ad = initRewardedAd();
+  if (!ad) { finish({ ok: false, reason: 'ad-init-failed' }); return; }
+
+  rewardedWaiter = finish;
+  rewardedTimer = setTimeout(() => settleRewarded({ ok: false, reason: 'ad-timeout' }), REWARD_TIMEOUT_MS);
+
+  const retryOnce = () => {
+    Promise.resolve(safeAdLoad(ad))
+      .then(() => ad.show())
+      .catch(err => {
+        console.warn('[tailzoo] 激励视频重试失败', err);
+        settleRewarded({ ok: false, reason: 'ad-show-failed' });
+      });
+  };
+  const shown = ad.show();
+  if (shown && typeof shown.catch === 'function') shown.catch(retryOnce);
+}
+
+/* ============================================================
    01. CONFIG
    ============================================================ */
 const CONFIG = {
-  grid: 20,
+  grid: 18,
   startLength: 3,
   baseTick: 150,
   minBaseTick: 95,
@@ -527,7 +737,7 @@ const CONFIG = {
   speedStepMs: 3,
   speedInterval: 30,
   rockInterval: 25,
-  maxRocks: 26,
+  maxRocks: 21,
   maxAnimals: 6,
   maxBerries: 4,
   startAnimals: 3,
@@ -543,6 +753,7 @@ const CONFIG = {
   shieldInvuln: 1.2,
   reviveInvuln: 2,
   maxLives: 4,
+  adReviveLimit: 1,
   animalRespawnMin: 0.6,
   animalRespawnMax: 1.4,
   berryRespawnMin: 1.0,
@@ -550,7 +761,7 @@ const CONFIG = {
   lateGameAt: 120,
   maxParticles: 220,
   maxFloats: 14,
-  version: '1.0.1'
+  version: '1.3.0'
 };
 
 const PALETTE = {
@@ -896,6 +1107,8 @@ const dom = {
   newBest:$('newBest'), gameoverTitle:$('gameoverTitle'), finalScore:$('finalScore'), deathReason:$('deathReason'),
   statTime:$('statTime'), statCaptures:$('statCaptures'), statLevel:$('statLevel'), statBuffs:$('statBuffs'),
   speciesSummary:$('speciesSummary'), btnAgain:$('btnAgain'), btnToTitle:$('btnToTitle'), bestGameover:$('bestGameover'),
+  btnRankTitle:$('btnRankTitle'), btnRankOver:$('btnRankOver'), btnReviveAd:$('btnReviveAd'), rankNote:$('rankNote'),
+  tapToast:$('tapToast'),
   debugPanel:$('debugPanel')
 };
 
@@ -957,6 +1170,7 @@ function createState() {
     startedAt:performance.now(),
     lastDeath:'',
     newBest:false,
+    adRevives:0,
     best:settings.bestScore
   };
 }
@@ -2207,9 +2421,9 @@ function selfCollision(nx, ny) {
   return false;
 }
 
-function doRevive(kind) {
+function doRevive(kind, ratio = 0.7, toastText = '熊猫把你拽了回来') {
   state.invuln = CONFIG.reviveInvuln;
-  const target = Math.max(3, Math.floor(state.snake.length * 0.7));
+  const target = Math.max(3, Math.floor(state.snake.length * ratio));
   if (state.snake.length > target) state.snake.length = target;
   const h = state.snake[0];
   for (const k of [...state.rocks]) {
@@ -2222,8 +2436,74 @@ function doRevive(kind) {
   addFloat(c.x, c.y - 16, '复活！', PALETTE.leaf, 18);
   Sfx.revive();
   shakeScreen(10);
-  showToast('熊猫把你拽了回来', 'good');
+  showToast(toastText, 'good');
   updateHud();
+}
+
+/* 复活后朝向棋盘中心，并保证下一格安全，避免刚复活又贴墙 */
+function pickSafeDir() {
+  const h = state.snake[0];
+  const cx = (CONFIG.grid - 1) / 2;
+  const cy = (CONFIG.grid - 1) / 2;
+  const dirs = [{ x:0, y:-1 }, { x:0, y:1 }, { x:-1, y:0 }, { x:1, y:0 }];
+  let best = dirs[0], bestScore = -Infinity;
+  for (const d of dirs) {
+    const nx = h.x + d.x, ny = h.y + d.y;
+    let s;
+    if (nx < 0 || ny < 0 || nx >= CONFIG.grid || ny >= CONFIG.grid) s = -1e9;
+    else if (selfCollision(nx, ny)) s = -1e9;
+    else if (state.rocks.has(keyOf(nx, ny))) s = -1e9;
+    // 越靠近棋盘中心越优先，同时轻微偏好水平方向（与原开局一致）
+    else s = -(Math.abs(nx - cx) + Math.abs(ny - cy)) + (d.y === 0 ? 0.1 : 0);
+    if (s > bestScore) { bestScore = s; best = d; }
+  }
+  return best;
+}
+
+/* 结算页「看视频复活」按钮：仅在客户端内且广告位就绪时出现 */
+function updateReviveUI() {
+  const btn = dom.btnReviveAd;
+  if (!btn) return;
+  const canShow = PLATFORM.adsReady && state.adRevives < CONFIG.adReviveLimit;
+  btn.classList.toggle('hidden', !canShow);
+  btn.disabled = false;
+  btn.textContent = '看视频复活';
+}
+
+function reviveFromAd() {
+  if (!state || state.screen !== 'gameover') return;
+  if (state.adRevives >= CONFIG.adReviveLimit) return;
+  const btn = dom.btnReviveAd;
+  if (btn) { btn.disabled = true; btn.textContent = '广告加载中…'; }
+  showRewarded('revive', res => {
+    if (btn) { btn.disabled = false; btn.textContent = '看视频复活'; }
+    if (state.screen !== 'gameover') {
+      if (res && res.ok) state.adRevives++;
+      return;
+    }
+    if (!res || !res.ok) {
+      setRankNote('广告暂时不可用，请稍后再试', 'bad');
+      return;
+    }
+    state.adRevives++;
+    state.score = Math.floor(state.score);
+    state.screen = 'playing';
+    doRevive(state.lastDeath, 0.5, '广告复活！继续冲');
+    state.dir = pickSafeDir();
+    state.queue.length = 0;
+    state.acc = 0;
+    state.best = settings.bestScore;
+    setRankNote('');
+    resetHudCache();
+    derived = deriveStats();
+    syncStats();
+    updateHud();
+    updateCollection();
+    updateBuffbar();
+    setScreen('playing');
+    syncDpad();
+    Sfx.revive();
+  });
 }
 
 function handleFatal(kind, x, y) {
@@ -2481,6 +2761,13 @@ function die(reason = 'self') {
   updateGameOver(isNew);
   updateTitleStats();
   setScreen('gameover');
+  updateReviveUI();
+  setRankNote('');
+  submitScore(final, (ok, err) => {
+    if (!state || state.screen !== 'gameover') return;
+    if (ok) setRankNote('本局 ' + final + ' 分已上传排行榜', 'good');
+    else if (PLATFORM.inClient) setRankNote('分数上传失败：' + (err || '未知错误'), 'bad');
+  });
 }
 
 /* ============================================================
@@ -2524,12 +2811,16 @@ function drawTitleScene(now) {
   ctx.setTransform(layout.dpr, 0, 0, layout.dpr, 0, 0);
   ctx.clearRect(0, 0, w, h);
   if (bgCanvas) ctx.drawImage(bgCanvas, 0, 0, w, h);
+  // 相对坐标（0~1），随 CONFIG.grid 自动缩放
   const spots = [
-    ['rabbit', 3, 5, .86], ['fox', 16, 4, .86], ['turtle', 9, 2, .72],
-    ['panda', 16, 15, .82], ['frog', 4, 15, .80], ['cat', 2, 10, .76],
-    ['squirrel', 17, 11, .76], ['hedgehog', 10, 17, .74]
+    ['rabbit', .16, .26, .86], ['fox', .84, .21, .86], ['turtle', .47, .11, .72],
+    ['panda', .84, .79, .82], ['frog', .21, .79, .80], ['cat', .11, .53, .76],
+    ['squirrel', .89, .58, .76], ['hedgehog', .53, .89, .74]
   ];
-  spots.forEach(([id, x, y, scale], i) => {
+  const span = CONFIG.grid - 1;
+  spots.forEach(([id, fx, fy, scale], i) => {
+    const x = Math.round(fx * span);
+    const y = Math.round(fy * span);
     const p = { x:(x + .5) * cell, y:(y + .5) * cell + Math.sin(now * 2 + i) * cell * .035 };
     const size = cell * scale;
     drawShadow(ctx, p.x, p.y + size * .36, size * .30, size * .10);
@@ -3054,6 +3345,11 @@ function bindEvents() {
   dom.btnToTitle.addEventListener('click', goTitle);
   dom.btnPause.addEventListener('click', pauseGame);
 
+  // TapTap 排行榜 / 广告复活
+  dom.btnRankTitle.addEventListener('click', () => { openLeaderboard(); });
+  dom.btnRankOver.addEventListener('click', () => { openLeaderboard(); });
+  dom.btnReviveAd.addEventListener('click', reviveFromAd);
+
   dom.chkShake.addEventListener('change', () => {
     settings.shake = dom.chkShake.checked;
     if (!settings.shake) state.shake = 0;
@@ -3169,6 +3465,7 @@ function boot() {
   resize();
   setTimeout(resize, 120);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => resize()).catch(() => {});
+  if (PLATFORM.adsReady) initRewardedAd();
   requestAnimationFrame(frame);
 }
 
@@ -3197,6 +3494,13 @@ window.__tailzoo = {
   queue(dx, dy) { queueDir(dx, dy); },
   tick() { tick(); },
   resize,
+  platform: PLATFORM,
+  submitScore,
+  openLeaderboard,
+  showRewarded,
+  initRewardedAd,
+  reviveFromAd,
+  adsReady() { return PLATFORM.adsReady; },
   snapshot() {
     return {
       screen: state.screen,
@@ -3216,6 +3520,9 @@ window.__tailzoo = {
       rocks: [...state.rocks],
       tickMs: state.tickMs,
       elapsed: state.elapsed,
+      grid: CONFIG.grid,
+      adRevives: state.adRevives,
+      adsReady: PLATFORM.adsReady,
       deaths: state.lastDeath
     };
   }

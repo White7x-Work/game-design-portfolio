@@ -13,7 +13,7 @@
 | 目录 | 内容 | 说明 |
 |---|---|---|
 | [`elemental-echo/`](elemental-echo/) | 《元素回响》Elemental Echo | 在研的卡牌构筑 Roguelike（TapTap 小游戏 / H5），以 Markdown 作为唯一事实源驱动开发 |
-| [`tail-zoo/`](tail-zoo/) | 《尾巴动物园》Tail Zoo | 贪吃蛇 × 动物收服 × 肉鸽三选一，单文件 HTML + Canvas，零依赖离线可玩 |
+| [`tail-zoo/`](tail-zoo/) | 《尾巴动物园》Tail Zoo | 贪吃蛇 × 动物收服 × 肉鸽三选一，单文件 HTML + Canvas，零依赖离线可玩；已接 TapTap 排行榜与激励视频 |
 | [`nonogram-mutations/`](nonogram-mutations/) | 《数织异化》Nonogram Mutations | 纯 TypeScript + Canvas 数织游戏，50 关 + 每日一题，规则异化（彩色 / 对角线 / 剪影）|
 | [`zzz-teardown/`](zzz-teardown/) | 《绝区零》战斗与养成系统拆解 | 机制层拆解 + 设计意图归因，28KB 结构化文档 + 8 张自制图表 |
 | [`resume/`](resume/) | 简历 | 游戏 AI 策划（Agent 协作底座方向）|
@@ -45,15 +45,17 @@ node tools/serve.cjs      # 本地预览
 
 ## 2. 《尾巴动物园》Tail Zoo
 
-贪吃蛇 × 动物收服 × 肉鸽三选一的卡通 H5 游戏，MVP 已完成（v1.0.1）。
+贪吃蛇 × 动物收服 × 肉鸽三选一的卡通 H5 游戏，MVP 已完成（v1.3.0），已接入 TapTap 排行榜与激励视频广告。
 
-- **单文件、零依赖**：逻辑、样式与 Canvas 美术全部打包在 `index.html`（约 110KB），不引 CDN、外链图片或字体，双击即离线可玩。
+- **单文件、零依赖**：逻辑、样式与 Canvas 美术全部打包在 `index.html`（约 124KB），不引 CDN、外链图片或字体，双击即离线可玩。
 - **核心循环**：蛇头碰到动物即收服，动物挂在身后提供被动；重复收服同种动物可升到 5 级；吃浆果积累经验，升级时从 3 张强化卡里选 1 张（普通随时出现、稀有 Lv.3 解锁、史诗 Lv.6 解锁）。
 - **风险与容错**：撞墙、自身或岩石会死亡；乌龟提供护盾、熊猫提供复活；无尽模式速度递增，障碍与动物持续刷新。
+- **TapTap 接入**：18×18 棋盘 + 底部居中虚拟方向键；结算自动上传「最高分榜」，标题页 / 结算页可打开排行榜；结算页「看视频复活」走激励视频（`res.isEnded` 为真才发奖，提前关闭不发，每局 1 次）。`tap` 不存在时全部静默降级，离线与网页预览不受影响。
 - **工程文档**：`PLAN.md`（30KB）写明产品定义、数值、里程碑与验收清单，并记录已知取舍与未做项；`CHANGELOG.md` 记录版本变化。
 
 ```bash
-node tools/serve.mjs      # 可选：本地 HTTP 预览（http://127.0.0.1:8765/）
+node tools/serve.mjs            # 可选：本地 HTTP 预览（http://127.0.0.1:8765/）
+node tools/verify-taptap.mjs    # 可选：headless Edge 跑 36 项接入验收
 ```
 
 `backups/` 保留 v1.0.0 与 v1.0.1 两个发布快照。

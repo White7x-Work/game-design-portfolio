@@ -18,6 +18,8 @@
 
 标题页可以关闭音效、屏震和虚拟方向键；设置与最佳分保存在本地。
 
+虚拟方向键在触屏设备上显示于**屏幕底部居中**，单个按钮 ≥ 56px（`--dpad-cell: clamp(52px, 15.5vw, 68px)`）；横屏或高度不足 560px 时自动收起，改用滑动。
+
 ## 玩法
 
 - 蛇头碰到动物即收服：身体 +1、获得经验与分数，动物会挂在身后；第一只头像紧贴蛇头。
@@ -45,12 +47,43 @@ node tools/serve.mjs
 - `index.html?touch=1`：在桌面强制启用触屏布局。
 - `window.__tailzoo`：暴露 `start`、`snapshot`、`forceLevelUp`、`spawnAnimal`、`grantBuff`、`die` 等测试钩子。
 
+## TapTap 小游戏 / H5 接入
+
+| 项 | 值 |
+| --- | --- |
+| 开发者 | White白工作室（Developer ID `502694`） |
+| App ID | `1006350` |
+| 屏幕方向 | 竖屏 |
+| 在线排行榜 | 最高分榜 · `xbzw2e4303k6c7uwqo`（always / desc / best，已发布） |
+| 广告 | 激励视频「看视频复活」，广告位 `1054324`（竖屏，已接入） |
+
+- 接入代码集中在 `index.html` 顶部 `00. TAPTAP PLATFORM` 段。`tap` 由 TapTap 宿主注入，**不要 npm 安装任何 SDK**。
+- 结算时自动 `submitScores` 提交本局分数；标题页 / 结算页的「排行榜」按钮调用 `openLeaderboard`。
+- 普通浏览器（无 `tap`）里所有接口静默降级，不会报错，离线玩法不受影响。
+- 广告位 ID 只能来自 TapTap MCP `check_ads_status` 的返回，**禁止从后台手填或复用其他应用**。
+- 激励视频：启动时 `createRewardedVideoAd` 预加载；`show()` 失败时 `load()` 后只重试一次；`onClose` 里 `res.isEnded === true` 才发奖励，提前关闭不给复活。
+- 本地模拟一次激励视频：`index.html?admock=1`（只在浏览器里模拟，真机走真实广告位）。
+- 上传方式：**H5 上传**（入口 `index.html`）。本作是 DOM + Canvas 页面，不能按 TapTap 小游戏打包——小游戏要求 `game.js` / `game.json` / `project.config.json` 且运行环境没有 `window`、`DOM`、`BOM`。
+- 压缩包结构：平台要求 **zip 根目录下套一个游戏目录**，其内才是 `index.html`：
+  ```
+  tail-zoo-v1.3.0.zip
+  └── tail-zoo/
+      └── index.html
+  ```
+  直接把 `index.html` 放在 zip 根目录会报「压缩包根目录必须包含一个游戏目录」。
+- 屏幕方向：在开发者后台的版本信息里设为竖屏；`game.json` 只对小游戏生效，H5 包不带。
+
 ## 文件
 
-- `index.html`：游戏本体（HTML + CSS + JS + Canvas 美术）。
+- `index.html`：游戏本体（HTML + CSS + JS + Canvas 美术 + TapTap 平台接入层）。
 - `PLAN.md`：产品规则、数值、里程碑与验收清单。
 - `tools/serve.mjs`：可选本地静态服务器。
-- `backups/tail-zoo-v1.0.1.html`：当前发布快照。
+- `tools/verify-taptap.mjs`：TapTap 接入层自动化验收（Edge headless + CDP）。
+- `tools/shots.mjs`：窄屏布局截图与溢出检查。
+- `tools/measure-dpad.mjs`：虚拟方向键在各机型下的尺寸 / 居中 / 溢出测量。
+- `screenshots/`：390×844 与 360×640 的标题页 / 结算页截图。
+- `dist/tail-zoo-v1.3.0/`：当前待上传产物（TapTap H5 上传目录）；`v1.2.0` / `v1.1.0` 为历史版本。
+- `backups/tail-zoo-v1.0.1.html`：上一版发布快照。
 - `backups/tail-zoo-v1.0.0.html`：首版历史快照。
 
 详细规则与数值见 `PLAN.md`。
