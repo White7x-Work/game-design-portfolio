@@ -1,9 +1,12 @@
 # 游戏设计作品集 · 许云翔
 
+[![Deploy](https://github.com/White7x-Work/game-design-portfolio/actions/workflows/pages.yml/badge.svg)](https://github.com/White7x-Work/game-design-portfolio/actions/workflows/pages.yml)
+
 游戏 AI 策划方向的作品与工程记录。每个目录都可以独立阅读。
 
 > ▶ **在线试玩**：<https://white7x-work.github.io/game-design-portfolio/>
 > 《尾巴动物园》与《数织异化》可直接打开游玩，无需安装。
+> 站点由 GitHub Actions 自动构建：`push` 到 `master` 后执行 `tsc` 并发布到 Pages。
 
 ## 目录
 
