@@ -4,7 +4,7 @@
 
 15829207208　|　2254059713@qq.com　|　成都　|　2027 届本科　|　CET-6（506）　|　一周内到岗
 
-作品集：https://github.com/White7x-Work/game-design-portfolio
+作品集（可在线试玩）：https://white7x-work.github.io/game-design-portfolio/　·　https://github.com/White7x-Work
 
 ## 一、个人概述
 
