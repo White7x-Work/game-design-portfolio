@@ -254,6 +254,29 @@
   .title-actions .row{gap:8px;}
   .title-best{font-size:11px;font-weight:800;opacity:.55;margin-bottom:10px;}
   .title-best strong{color:var(--orange);font-size:14px;}
+  .map-picker{margin:4px 0 10px;text-align:left;}
+  .map-picker-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 2px 5px;font-size:10px;font-weight:900;opacity:.65;letter-spacing:.2px;}
+  .map-picker-head span:last-child{font-size:9px;opacity:.7;}
+  .map-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:2px 2px 5px;}
+  .map-card{
+    min-width:0;display:flex;flex-direction:column;gap:3px;
+    padding:7px 8px 8px;text-align:left;font:inherit;color:var(--ink);cursor:pointer;
+    background:#fffdf7;border:2.5px solid var(--ink);border-radius:14px;
+    box-shadow:0 3px 0 rgba(43,43,60,.14);
+    transition:transform .12s, box-shadow .12s, background .12s;
+  }
+  .map-card:hover{transform:translateY(-2px);box-shadow:0 5px 0 rgba(43,43,60,.16);}
+  .map-card:active{transform:translateY(1px);box-shadow:0 2px 0 rgba(43,43,60,.14);}
+  .map-card.active{background:#fff1b8;box-shadow:0 3px 0 rgba(43,43,60,.24), inset 0 0 0 2px rgba(255,159,69,.35);}
+  .map-card.locked{opacity:.52;filter:grayscale(.45);cursor:not-allowed;}
+  .map-card.locked:hover{transform:none;box-shadow:0 3px 0 rgba(43,43,60,.14);}
+  .map-card .map-top{display:flex;align-items:center;gap:4px;min-width:0;}
+  .map-card .map-icon{font-size:16px;line-height:1;}
+  .map-card .map-name{font-size:12px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .map-card .map-tag{margin-left:auto;font-size:8px;font-weight:900;opacity:.55;border:1.5px solid rgba(43,43,60,.2);border-radius:99px;padding:1px 4px;white-space:nowrap;}
+  .map-card .map-meta{font-size:9px;font-weight:800;line-height:1.35;opacity:.62;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .map-card .map-lock{font-size:8px;font-weight:900;line-height:1.3;color:#a25a20;background:#fff3d6;border-radius:5px;padding:1px 4px;margin-top:1px;}
+  .map-card.active .map-lock{color:var(--leafDark);background:#e7f9dd;}
   .title-settings{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:11px;font-weight:800;opacity:.72;border-top:2px dashed rgba(43,43,60,.12);padding-top:10px;}
   .title-settings label{display:inline-flex;align-items:center;gap:4px;cursor:pointer;}
   .title-settings input{width:14px;height:14px;accent-color:var(--leaf);}
@@ -313,6 +336,49 @@
   .species-tag{font-size:9px;font-weight:900;background:#fff;border:2px solid var(--ink);border-radius:99px;padding:1px 6px;}
   .gameover-panel .row .btn{flex:1;min-width:0;padding:10px 8px;font-size:14px;white-space:nowrap;}
 
+  /* Codex + achievements */
+  .panel-kicker{display:inline-block;font-size:9px;font-weight:900;letter-spacing:2px;color:var(--leaf);background:#e7f9dd;border:2px solid var(--ink);border-radius:99px;padding:2px 8px;margin-bottom:6px;}
+  .collection-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;text-align:left;}
+  .collection-head h2{margin:0;}
+  .collection-head .sub{margin:2px 0 0;}
+  .collection-head .btn{flex:0 0 auto;}
+  .codex-panel{width:min(94vw,720px);text-align:left;}
+  .codex-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:11px 0;max-height:61vh;overflow-y:auto;padding:2px;}
+  .codex-card{display:flex;align-items:center;gap:7px;min-width:0;padding:7px;background:#fff;border:2.5px solid var(--ink);border-radius:13px;box-shadow:0 3px 0 rgba(43,43,60,.11);}
+  .codex-card.locked{opacity:.56;filter:grayscale(.4);}
+  .codex-card canvas{width:42px;height:42px;flex:0 0 42px;display:block;}
+  .codex-body{min-width:0;display:flex;flex-direction:column;gap:2px;}
+  .codex-top{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+  .codex-top b{font-size:12px;line-height:1.1;}
+  .codex-rarity{font-size:8px;font-weight:900;border:1.5px solid rgba(43,43,60,.2);border-radius:99px;padding:0 4px;opacity:.62;}
+  .codex-desc{font-size:9px;font-weight:700;line-height:1.35;opacity:.66;margin:0;}
+  .codex-meta{font-size:8px;font-weight:800;line-height:1.3;opacity:.48;}
+  .ach-panel{width:min(94vw,620px);text-align:left;}
+  .ach-list{display:flex;flex-direction:column;gap:7px;margin:11px 0;max-height:61vh;overflow-y:auto;padding:2px;}
+  .ach-card{display:flex;align-items:center;gap:9px;padding:8px 10px;background:#fff;border:2.5px solid var(--ink);border-radius:13px;box-shadow:0 3px 0 rgba(43,43,60,.11);}
+  .ach-card.done{background:#fff1b8;}
+  .ach-icon{font-size:22px;line-height:1;flex:0 0 27px;text-align:center;}
+  .ach-card:not(.done) .ach-icon{filter:grayscale(1);opacity:.45;}
+  .ach-body{flex:1;min-width:0;}
+  .ach-line{display:flex;align-items:center;gap:6px;}
+  .ach-line b{font-size:12px;}
+  .ach-desc{font-size:9px;font-weight:700;opacity:.58;margin:1px 0 3px;}
+  .ach-progress{display:flex;align-items:center;gap:6px;}
+  .ach-track{height:7px;flex:1;background:rgba(43,43,60,.1);border:1.5px solid rgba(43,43,60,.16);border-radius:99px;overflow:hidden;}
+  .ach-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--orange));border-radius:99px;}
+  .ach-count{font-size:8px;font-weight:900;opacity:.55;white-space:nowrap;}
+  .intro-panel{width:min(92vw,420px);}
+  .intro-badge{display:inline-block;background:var(--gold);border:2.5px solid var(--ink);border-radius:99px;padding:2px 10px;font-size:9px;font-weight:900;letter-spacing:1.6px;transform:rotate(-2deg);}
+  .intro-sprite-wrap{width:132px;height:132px;margin:9px auto 6px;background:#fffdf7;border:3px solid var(--ink);border-radius:50%;display:grid;place-items:center;box-shadow:0 5px 0 rgba(43,43,60,.14);overflow:hidden;}
+  #introSprite{display:block;width:112px;height:112px;}
+  .intro-panel h2{margin:2px 0 3px;}
+  .intro-rarity{display:inline-block;font-size:9px;font-weight:900;border:2px solid var(--ink);border-radius:99px;padding:1px 8px;background:#fff;margin-bottom:8px;}
+  .intro-desc{font-size:12px;font-weight:800;line-height:1.5;background:#fff4cf;border:2px dashed rgba(43,43,60,.24);border-radius:12px;padding:9px;margin:0 0 8px;text-align:left;}
+  .intro-note{font-size:9px;font-weight:800;opacity:.52;margin:0 0 11px;}
+  .ach-toast{position:fixed;left:50%;top:calc(12px + env(safe-area-inset-top));transform:translateX(-50%);z-index:140;display:flex;align-items:center;gap:7px;max-width:min(92vw,520px);padding:8px 14px;background:rgba(43,43,60,.95);color:#fff;border:2.5px solid var(--gold);border-radius:99px;box-shadow:0 5px 0 rgba(43,43,60,.22);font-size:11px;font-weight:900;text-align:center;pointer-events:none;animation:achIn .24s ease-out;}
+  .ach-toast .ach-toast-icon{font-size:16px;line-height:1;}
+  @keyframes achIn{from{opacity:0;transform:translate(-50%,-8px)}to{opacity:1;transform:translate(-50%,0)}}
+
   /* ---------- D-pad ---------- */
   #dpad{
     position:relative;z-index:5;flex:0 0 auto;
@@ -330,7 +396,7 @@
   .dpad-btn:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(43,43,60,.2);background:var(--gold);}
   #dpadUp{grid-column:2;grid-row:1;} #dpadLeft{grid-column:1;grid-row:2;}
   #dpadRight{grid-column:3;grid-row:2;} #dpadDown{grid-column:2;grid-row:3;}
-  #dpadCenter{grid-column:2;grid-row:2;border:none;background:transparent;box-shadow:none;font-size:10px;opacity:.4;cursor:default;}
+  #dpadCenter{grid-column:2;grid-row:2;border:none;background:transparent;box-shadow:none;font-size:9px;opacity:.4;cursor:default;}
 
   /* ---------- Debug ---------- */
   #debugPanel{
@@ -355,9 +421,23 @@
     .card .keyhint{top:7px;right:7px;}
     .card:hover{transform:none;}
     .title-panel{padding:18px 14px;}
+    .map-card{padding:6px 6px 7px;}
+    .map-card .map-tag{display:none;}
+    .map-card .map-name{font-size:10.5px;flex:1;}
+    .map-card .map-meta{font-size:8.5px;white-space:normal;line-height:1.28;overflow:visible;text-overflow:clip;}
     .title-settings{gap:10px;}
     .howto-grid{gap:6px;}
     .howto-item{padding:8px;}
+    .codex-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-height:56vh;}
+    .codex-card{padding:6px;gap:5px;}
+    .codex-card canvas{width:36px;height:36px;flex-basis:36px;}
+    .codex-top b{font-size:11px;}
+    .codex-desc{font-size:8.5px;}
+    .codex-meta{font-size:7.5px;}
+    .ach-list{max-height:56vh;}
+    .ach-card{padding:7px 8px;}
+    .panel-kicker{font-size:8px;}
+    .collection-head .btn{padding:7px 10px;font-size:12px;}
   }
   @media (max-width:420px){
     #topbar{gap:6px;padding:8px 9px;}
@@ -370,11 +450,15 @@
     #collection{padding:3px 4px;}
     .species-slot{max-width:28px;}
     .buff-chip{font-size:9px;padding:0 5px;}
-    .title-actions .row .btn{padding:9px 9px;font-size:13px;}
+    .title-actions .row .btn{padding:9px 8px;font-size:12px;}
     .ad-revive{font-size:14px;}
   }
   @media (max-width:380px){
     .best{display:none;}
+  }
+  @media (max-height:720px){
+    #mascotCanvas{height:150px;width:auto;max-width:100%;margin-left:auto;margin-right:auto;}
+    .map-picker{margin-bottom:7px;}
   }
   @media (max-height:560px){
     :root{--playw: min(68vw, calc(100dvh - 88px), 560px);}
@@ -458,11 +542,17 @@
       <p class="tagline">收服越多，尾巴越长，能力越怪。<br>别撞墙，也别打结。</p>
     </div>
     <canvas id="mascotCanvas" width="480" height="184" aria-hidden="true"></canvas>
+    <div class="map-picker" aria-label="地图选择">
+      <div class="map-picker-head"><span>选择地图</span><span id="mapProgress">已玩 0 局 · 最佳 0 分</span></div>
+      <div id="mapCards" class="map-cards"></div>
+    </div>
     <div class="title-actions">
       <button class="btn primary big" id="btnStart">开始游戏</button>
       <div class="row">
         <button class="btn ghost" id="btnHowto">玩法说明</button>
         <button class="btn ghost" id="btnRankTitle">排行榜</button>
+        <button class="btn ghost" id="btnCodex">图鉴</button>
+        <button class="btn ghost" id="btnAchievements">成就</button>
         <button class="btn ghost" id="btnSoundTitle">音效：开</button>
       </div>
     </div>
@@ -484,7 +574,7 @@
       <div class="howto-item"><div class="howto-icon">⭐</div><h3>升级</h3><p>收服和吃浆果获得经验。升级时暂停，从 3 个能力里选 1 个。</p></div>
       <div class="howto-item"><div class="howto-icon">⚠️</div><h3>危险</h3><p>别撞墙、自己或岩石。乌龟护盾、刺猬和复活能救你。</p></div>
     </div>
-    <div class="howto-note">每只动物都有独特被动：兔子加速、狐狸加分、猫咪吸浆果、熊猫复活……重复收服同一物种可以升级它。</div>
+    <div class="howto-note">每只动物都有独特被动：兔子加速、狐狸加分、猫咪吸浆果、熊猫复活……重复收服同一物种可以升级它。<br>三张地图各有特色动物与食物；累计局数和最佳分会解锁新地图。</div>
     <div class="row">
       <button class="btn ghost" id="btnHowtoBack">返回</button>
       <button class="btn primary" id="btnHowtoStart">开始游戏</button>
@@ -536,10 +626,53 @@
       <button class="btn ghost" id="btnToTitle">返回标题</button>
     </div>
     <div class="rank-note" id="rankNote"></div>
-    <div class="tiny-note">最佳 <span id="bestGameover">0</span> 分</div>
+    <div class="tiny-note"><span id="mapGameover">阳光草原</span> · 最佳 <span id="bestGameover">0</span> 分</div>
   </div>
 </section>
 
+<section id="screen-codex" class="screen" aria-label="动物图鉴">
+  <div class="panel codex-panel">
+    <div class="collection-head">
+      <div>
+        <span class="panel-kicker">ANIMAL CODEX</span>
+        <h2>动物图鉴</h2>
+        <p class="sub" id="codexSub">已发现 0 / 12 · 收服后记录能力</p>
+      </div>
+      <button class="btn ghost small" id="btnCodexBack">返回</button>
+    </div>
+    <div id="codexGrid" class="codex-grid"></div>
+    <div class="tiny-note">首次收服会弹出介绍并记录到图鉴；已发现的动物会保留最高等级与累计收服次数。</div>
+  </div>
+</section>
+
+<section id="screen-achievements" class="screen" aria-label="成就">
+  <div class="panel ach-panel">
+    <div class="collection-head">
+      <div>
+        <span class="panel-kicker">ACHIEVEMENTS</span>
+        <h2>成就</h2>
+        <p class="sub" id="achSub">已解锁 0 / 12</p>
+      </div>
+      <button class="btn ghost small" id="btnAchBack">返回</button>
+    </div>
+    <div id="achList" class="ach-list"></div>
+    <div class="tiny-note">成就进度会随游玩自动保存；解锁时会在画面顶部提示。</div>
+  </div>
+</section>
+
+<section id="screen-intro" class="screen" aria-label="新动物介绍">
+  <div class="panel intro-panel">
+    <span class="intro-badge">NEW CODEX</span>
+    <div class="intro-sprite-wrap"><canvas id="introSprite" width="128" height="128" aria-hidden="true"></canvas></div>
+    <h2 id="introName">新朋友</h2>
+    <div class="intro-rarity" id="introRarity">普通</div>
+    <p class="intro-desc" id="introDesc"></p>
+    <p class="intro-note" id="introNote">已收入图鉴，之后可以在标题页查看能力。</p>
+    <button class="btn primary" id="btnIntroClose">收入图鉴</button>
+  </div>
+</section>
+
+<div id="achToast" class="ach-toast hidden" role="status" aria-live="polite"></div>
 <div id="tapToast" role="status" aria-live="polite"></div>
 <div id="debugPanel" class="hidden"></div>
 
@@ -780,7 +913,7 @@ const CONFIG = {
   lateGameAt: 120,
   maxParticles: 220,
   maxFloats: 14,
-  version: '1.4.0'
+  version: '1.5.0'
 };
 
 const PALETTE = {
@@ -851,9 +984,164 @@ const ANIMALS = {
     name:'熊猫', rarity:'epic', weight:5,
     desc:'竹佑：Lv.1/3/5 获得复活次数',
     accent:'#f2f2f2'
+  },
+  deer: {
+    name:'鹿', rarity:'rare', weight:6,
+    desc:'灵角：每次收服额外获得 1 点经验/级',
+    accent:'#d9a066'
+  },
+  owl: {
+    name:'猫头鹰', rarity:'rare', weight:5,
+    desc:'夜巡：岩石生成间隔 +18%/级',
+    accent:'#b79cff'
+  },
+  camel: {
+    name:'骆驼', rarity:'rare', weight:6,
+    desc:'驼峰：护盾上限 +1，Lv.3/5 再 +1',
+    accent:'#e2b36b'
+  },
+  meerkat: {
+    name:'狐獴', rarity:'common', weight:14,
+    desc:'哨兵：动物刷新间隔 -10%/级',
+    accent:'#d9b382'
   }
 };
-const ANIMAL_ORDER = ['rabbit','turtle','fox','cat','hedgehog','squirrel','frog','panda'];
+const ANIMAL_ORDER = ['rabbit','turtle','fox','cat','hedgehog','squirrel','frog','panda','deer','owl','camel','meerkat'];
+
+const FOODS = {
+  berry: {
+    name:'草莓', exp:1, score:5, goldExp:5, goldScore:25,
+    accent:'#ff5d73', desc:'草原上的基础果实'
+  },
+  blueberry: {
+    name:'蓝莓', exp:2, score:4, goldExp:6, goldScore:24,
+    accent:'#6d8cff', desc:'森林里的甜蓝果实'
+  },
+  moonMushroom: {
+    name:'月光菇', exp:1, score:8, goldExp:5, goldScore:32,
+    accent:'#b79cff', desc:'夜里会发光的蘑菇'
+  },
+  cactusFruit: {
+    name:'仙人掌果', exp:2, score:6, goldExp:6, goldScore:30, shield:1,
+    accent:'#ff6b8a', desc:'绿洲果实，能补 1 点护盾'
+  },
+  sunfruit: {
+    name:'沙棘果', exp:3, score:5, goldExp:8, goldScore:35,
+    accent:'#ffb347', desc:'沙海里酸甜的橙色果实'
+  }
+};
+
+const MAPS = {
+  grass: {
+    id:'grass', name:'阳光草原', icon:'🌱', tag:'新手',
+    desc:'轻快的草地，动物种类最全。',
+    unlock:{ runs:0, best:0 },
+    animals:['rabbit','turtle','fox','cat','hedgehog','squirrel','frog','panda'],
+    featuredAnimals:['rabbit','panda'],
+    foods:['berry'],
+    deco:'grass',
+    theme:{
+      baseA:'#a8e6a3', baseB:'#9adb95', baseC:'#b6efad',
+      ink:'#2b2b3c', leaf:'#2f7d58', accent:'#ffd166',
+      vignette:'rgba(43,43,60,.14)', frame:'rgba(43,43,60,.16)'
+    }
+  },
+  forest: {
+    id:'forest', name:'月影森林', icon:'🌙', tag:'探索',
+    desc:'月色下的密林，鹿与猫头鹰出没。',
+    unlock:{ runs:3, best:150 },
+    animals:['rabbit','fox','squirrel','hedgehog','deer','owl'],
+    featuredAnimals:['deer','owl'],
+    foods:['blueberry','moonMushroom'],
+    deco:'forest',
+    theme:{
+      baseA:'#4f9b78', baseB:'#468d6d', baseC:'#5aaa82',
+      ink:'#203b34', leaf:'#2f7d58', accent:'#b79cff',
+      vignette:'rgba(16,38,34,.30)', frame:'rgba(16,38,34,.28)'
+    }
+  },
+  desert: {
+    id:'desert', name:'赤沙绿洲', icon:'🏜️', tag:'挑战',
+    desc:'炎热沙海，骆驼与狐獴守着绿洲。',
+    unlock:{ runs:8, best:400 },
+    animals:['turtle','cat','hedgehog','camel','meerkat'],
+    featuredAnimals:['camel','meerkat'],
+    foods:['cactusFruit','sunfruit'],
+    deco:'desert',
+    theme:{
+      baseA:'#f0cf8b', baseB:'#e9c57f', baseC:'#f7dca0',
+      ink:'#4a3525', leaf:'#6b8f3f', accent:'#ffab63',
+      vignette:'rgba(74,53,37,.20)', frame:'rgba(74,53,37,.24)'
+    }
+  }
+};
+const MAP_ORDER = ['grass','forest','desert'];
+
+const ACHIEVEMENTS = {
+  firstMeet: {
+    name:'初次相遇', icon:'🐾', desc:'首次收服任意动物', target:1,
+    progress:() => Object.keys((settings && settings.codex) || {}).length,
+    unit:' 种'
+  },
+  fiveSpecies: {
+    name:'小小动物园', icon:'🏡', desc:'图鉴发现 5 种动物', target:5,
+    progress:() => Object.keys((settings && settings.codex) || {}).length,
+    unit:' 种'
+  },
+  allSpecies: {
+    name:'动物园长', icon:'👑', desc:'图鉴发现全部 12 种动物', target:12,
+    progress:() => Object.keys((settings && settings.codex) || {}).length,
+    unit:' 种'
+  },
+  fiveRuns: {
+    name:'草原常客', icon:'🌱', desc:'累计游玩 5 局', target:5,
+    progress:() => (settings && settings.runs) || 0,
+    unit:' 局'
+  },
+  forestUnlock: {
+    name:'森林旅人', icon:'🌙', desc:'解锁月影森林', target:1,
+    progress:() => (settings && isMapUnlocked(MAPS.forest)) ? 1 : 0
+  },
+  desertUnlock: {
+    name:'绿洲探险家', icon:'🏜️', desc:'解锁赤沙绿洲', target:1,
+    progress:() => (settings && isMapUnlocked(MAPS.desert)) ? 1 : 0
+  },
+  score300: {
+    name:'三百分', icon:'⭐', desc:'最高分达到 300 分', target:300,
+    progress:() => (settings && settings.bestScore) || 0,
+    unit:' 分'
+  },
+  score1000: {
+    name:'千分传说', icon:'🏆', desc:'最高分达到 1000 分', target:1000,
+    progress:() => (settings && settings.bestScore) || 0,
+    unit:' 分'
+  },
+  captures50: {
+    name:'资深饲养员', icon:'🦴', desc:'累计收服 50 只动物', target:50,
+    progress:() => (settings && settings.stats && settings.stats.captures) || 0,
+    unit:' 只'
+  },
+  survive180: {
+    name:'长尾寿星', icon:'⏱️', desc:'单局存活达到 3 分钟', target:180,
+    progress:() => (settings && settings.stats && settings.stats.bestTime) || 0,
+    time:true
+  },
+  gold20: {
+    name:'黄金味蕾', icon:'✨', desc:'累计吃到 20 颗金色果实', target:20,
+    progress:() => (settings && settings.stats && settings.stats.goldFoods) || 0,
+    unit:' 颗'
+  },
+  length15: {
+    name:'长尾奇迹', icon:'🐍', desc:'单局尾巴长度达到 15 节', target:15,
+    progress:() => (settings && settings.stats && settings.stats.maxLength) || 0,
+    unit:' 节'
+  }
+};
+const ACH_ORDER = Object.keys(ACHIEVEMENTS);
+
+function currentMap() {
+  return (state && MAPS[state.mapId]) || MAPS[settings.selectedMap] || MAPS.grass;
+}
 
 const BUFFS = {
   swift: {
@@ -974,7 +1262,18 @@ const settings = {
   muted: false,
   shake: true,
   dpad: true,
-  seenTutorial: false
+  seenTutorial: false,
+  selectedMap: 'grass',
+  codex: {},
+  achievements: {},
+  stats: {
+    captures: 0,
+    foods: 0,
+    goldFoods: 0,
+    maxLength: 3,
+    maxLevel: 1,
+    bestTime: 0
+  }
 };
 let saveOK = true;
 
@@ -990,6 +1289,30 @@ function loadSave() {
     settings.shake = data.shake !== false;
     settings.dpad = data.dpad !== false;
     settings.seenTutorial = !!data.seenTutorial;
+    settings.selectedMap = MAPS[data.selectedMap] ? data.selectedMap : 'grass';
+    settings.codex = {};
+    if (data.codex && typeof data.codex === 'object') {
+      for (const id of ANIMAL_ORDER) {
+        const v = data.codex[id];
+        if (!v) continue;
+        const lv = Math.max(1, Math.min(5, Math.floor(Number(typeof v === 'number' ? v : v.lv) || 1)));
+        const captures = Math.max(1, Math.floor(Number(v.captures) || 1));
+        settings.codex[id] = { lv, captures };
+      }
+    }
+    settings.achievements = {};
+    if (data.achievements && typeof data.achievements === 'object') {
+      for (const id of ACH_ORDER) if (data.achievements[id]) settings.achievements[id] = true;
+    }
+    const st = data.stats && typeof data.stats === 'object' ? data.stats : {};
+    settings.stats = {
+      captures: Math.max(0, Math.floor(Number(st.captures) || 0)),
+      foods: Math.max(0, Math.floor(Number(st.foods) || 0)),
+      goldFoods: Math.max(0, Math.floor(Number(st.goldFoods) || 0)),
+      maxLength: Math.max(3, Math.floor(Number(st.maxLength) || 3)),
+      maxLevel: Math.max(1, Math.floor(Number(st.maxLevel) || 1)),
+      bestTime: Math.max(0, Number(st.bestTime) || 0)
+    };
   } catch (e) {
     saveOK = false;
   }
@@ -1116,16 +1439,21 @@ const dom = {
   stage:$('stage'), boardWrap:$('boardWrap'), canvas:$('game'), toast:$('toast'),
   underbar:$('underbar'), collection:$('collection'), buffbar:$('buffbar'),
   dpad:$('dpad'),
-  screens:{ title:$('screen-title'), howto:$('screen-howto'), paused:$('screen-pause'), levelup:$('screen-levelup'), gameover:$('screen-gameover') },
-  btnStart:$('btnStart'), btnHowto:$('btnHowto'), btnSoundTitle:$('btnSoundTitle'),
+  screens:{ title:$('screen-title'), howto:$('screen-howto'), paused:$('screen-pause'), levelup:$('screen-levelup'), gameover:$('screen-gameover'), codex:$('screen-codex'), achievements:$('screen-achievements'), intro:$('screen-intro') },
+  btnStart:$('btnStart'), btnHowto:$('btnHowto'), btnCodex:$('btnCodex'), btnAchievements:$('btnAchievements'), btnSoundTitle:$('btnSoundTitle'),
   bestTitle:$('bestTitle'), runsTitle:$('runsTitle'), chkShake:$('chkShake'), chkDpad:$('chkDpad'),
+  mapCards:$('mapCards'), mapProgress:$('mapProgress'),
   mascot:$('mascotCanvas'),
   btnHowtoBack:$('btnHowtoBack'), btnHowtoStart:$('btnHowtoStart'),
   btnResume:$('btnResume'), btnRestartPause:$('btnRestartPause'), btnSoundPause:$('btnSoundPause'), btnTitlePause:$('btnTitlePause'),
   levelupSub:$('levelupSub'), cards:$('cards'),
   newBest:$('newBest'), gameoverTitle:$('gameoverTitle'), finalScore:$('finalScore'), deathReason:$('deathReason'),
   statTime:$('statTime'), statCaptures:$('statCaptures'), statLevel:$('statLevel'), statBuffs:$('statBuffs'),
-  speciesSummary:$('speciesSummary'), btnAgain:$('btnAgain'), btnToTitle:$('btnToTitle'), bestGameover:$('bestGameover'),
+  speciesSummary:$('speciesSummary'), btnAgain:$('btnAgain'), btnToTitle:$('btnToTitle'), bestGameover:$('bestGameover'), mapGameover:$('mapGameover'),
+  codexSub:$('codexSub'), codexGrid:$('codexGrid'), btnCodexBack:$('btnCodexBack'),
+  achSub:$('achSub'), achList:$('achList'), btnAchBack:$('btnAchBack'),
+  introSprite:$('introSprite'), introName:$('introName'), introRarity:$('introRarity'), introDesc:$('introDesc'), introNote:$('introNote'), btnIntroClose:$('btnIntroClose'),
+  achToast:$('achToast'),
   btnRankTitle:$('btnRankTitle'), btnRankOver:$('btnRankOver'), btnReviveAd:$('btnReviveAd'), rankNote:$('rankNote'),
   tapToast:$('tapToast'),
   debugPanel:$('debugPanel')
@@ -1167,6 +1495,7 @@ function createState() {
   }
   return {
     screen:'title',
+    mapId: selectedMapId(),
     snake,
     dir:{ x:1, y:0 },
     queue:[],
@@ -1184,6 +1513,8 @@ function createState() {
     rockTimer:CONFIG.rockInterval,
     animalTimer:0, berryTimer:0,
     cooldowns:{ frog:0, hedge:0, blade:0 },
+    introQueue:[],
+    introResume:'playing',
     hourglassTimer:40,
     invuln:0, shake:0, slow:0,
     startedAt:performance.now(),
@@ -1226,6 +1557,10 @@ function deriveStats() {
   const squirrel = effectiveLevel('squirrel');
   const frog = effectiveLevel('frog');
   const panda = effectiveLevel('panda');
+  const deer = effectiveLevel('deer');
+  const owl = effectiveLevel('owl');
+  const camel = effectiveLevel('camel');
+  const meerkat = effectiveLevel('meerkat');
 
   const tick = clamp(
     baseTickMs() * (1 - 0.04 * rabbit) * Math.pow(0.95, buffLevel('swift')),
@@ -1235,9 +1570,11 @@ function deriveStats() {
   const scoreMul = foxMul * (1 + 0.20 * buffLevel('greed'));
   const feastMul = 1 + 0.30 * buffLevel('feast');
   const pickup = Math.min(6, cat * 0.8 + buffLevel('scent'));
-  const shieldMax = turtle ? 1 + (turtle >= 3 ? 1 : 0) + (turtle >= 5 ? 1 : 0) : 0;
-  const shieldRecharge = turtle
-    ? Math.max(15, (45 - 5 * (turtle - 1)) * Math.pow(0.85, buffLevel('armor')))
+  const turtleShield = turtle ? 1 + (turtle >= 3 ? 1 : 0) + (turtle >= 5 ? 1 : 0) : 0;
+  const camelShield = camel ? 1 + (camel >= 3 ? 1 : 0) + (camel >= 5 ? 1 : 0) : 0;
+  const shieldMax = turtleShield + camelShield;
+  const shieldRecharge = shieldMax > 0
+    ? Math.max(15, (45 - 5 * Math.max(0, turtle - 1)) * Math.pow(0.85, buffLevel('armor')))
     : 0;
   const lives = Math.min(CONFIG.maxLives, pandaRevives(panda) + buffLevel('life'));
   const goldChance = CONFIG.goldChance + (buffLevel('golden') ? CONFIG.goldBuffChance : 0);
@@ -1247,11 +1584,15 @@ function deriveStats() {
   const frogRange = frog ? 3 + (frog >= 3 ? 1 : 0) + (frog >= 5 ? 1 : 0) : 0;
   const slowDuration = 3 + (buffLevel('hourglass') >= 2 ? 1 : 0);
   const spawnMul = Math.pow(0.88, buffLevel('affinity')) * (state.elapsed >= CONFIG.lateGameAt ? 0.9 : 1);
+  const animalSpawnMul = Math.pow(0.90, meerkat);
+  const rockInterval = CONFIG.rockInterval * (1 + 0.18 * owl);
+  const captureExpBonus = deer;
 
   return {
     tick, foxMul, scoreMul, feastMul, pickup,
     shieldMax, shieldRecharge, lives, goldChance,
     hedgeCd, bladeCd, frogCd, frogRange, slowDuration, spawnMul,
+    animalSpawnMul, rockInterval, captureExpBonus,
     squirrelChance: 0.20 * squirrel,
     spirit: !!buffLevel('spirit'),
     hourglass: buffLevel('hourglass') > 0
@@ -1770,9 +2111,192 @@ function drawPanda(g, blink) {
   blush(g, 40, 71); blush(g, 88, 71);
 }
 
+function drawDeer(g, blink) {
+  // 鹿角
+  g.save();
+  g.strokeStyle = PALETTE.ink;
+  g.lineCap = 'round';
+  g.lineWidth = 5;
+  for (const side of [-1, 1]) {
+    g.beginPath();
+    g.moveTo(64 + side * 15, 44);
+    g.lineTo(64 + side * 20, 20);
+    g.moveTo(64 + side * 19, 29);
+    g.lineTo(64 + side * 31, 20);
+    g.moveTo(64 + side * 21, 23);
+    g.lineTo(64 + side * 30, 9);
+    g.stroke();
+  }
+  g.restore();
+  // 耳朵
+  for (const side of [-1, 1]) {
+    g.save();
+    g.translate(64 + side * 25, 40);
+    g.rotate(side * .22);
+    ellipse(g, 0, 0, 10, 17);
+    fs(g, '#d9a066');
+    ellipse(g, 0, 1, 5, 10);
+    g.fillStyle = '#f3c9a0'; g.fill();
+    g.restore();
+  }
+  // 身体与脚
+  ellipse(g, 64, 96, 24, 20); fs(g, '#d9a066');
+  ellipse(g, 48, 112, 10, 6); fs(g, '#b9773f');
+  ellipse(g, 80, 112, 10, 6); fs(g, '#b9773f');
+  ellipse(g, 64, 101, 14, 11); fs(g, '#f3d3ad');
+  // 头
+  ellipse(g, 64, 62, 28, 26); fs(g, '#d9a066');
+  ellipse(g, 64, 76, 16, 11); fs(g, '#f3d3ad');
+  ellipse(g, 64, 72, 5, 4); g.fillStyle = PALETTE.ink; g.fill();
+  g.save();
+  g.lineWidth = 2.6; g.strokeStyle = PALETTE.ink;
+  g.beginPath();
+  g.moveTo(64, 76); g.lineTo(64, 79);
+  g.moveTo(64, 79); g.quadraticCurveTo(60, 83, 57, 79);
+  g.moveTo(64, 79); g.quadraticCurveTo(68, 83, 71, 79);
+  g.stroke();
+  g.restore();
+  eye(g, 52, 58, 8, blink);
+  eye(g, 76, 58, 8, blink);
+  blush(g, 43, 72); blush(g, 85, 72);
+  // 白色斑点
+  g.save();
+  g.fillStyle = 'rgba(255,253,247,.78)';
+  for (const [x, y, r] of [[52, 91, 3], [76, 88, 2.5], [60, 103, 2.2], [82, 100, 2.4]]) {
+    circle(g, x, y, r); g.fill();
+  }
+  g.restore();
+}
+
+function drawOwl(g, blink) {
+  // 翅膀
+  ellipse(g, 36, 89, 12, 24, -.16); fs(g, '#9c83c9');
+  ellipse(g, 92, 89, 12, 24, .16); fs(g, '#9c83c9');
+  // 身体与肚皮
+  ellipse(g, 64, 92, 27, 27); fs(g, '#b79cff');
+  ellipse(g, 64, 98, 17, 17); fs(g, '#f3eaff');
+  // 耳羽
+  for (const side of [-1, 1]) {
+    g.save();
+    g.translate(64 + side * 21, 34);
+    g.rotate(side * .18);
+    g.beginPath();
+    g.moveTo(-10, 10); g.lineTo(0, -18); g.lineTo(10, 11);
+    g.closePath();
+    fs(g, '#b79cff');
+    g.restore();
+  }
+  // 头
+  ellipse(g, 64, 59, 30, 27); fs(g, '#cbb8ff');
+  // 大眼睛
+  for (const x of [51, 77]) {
+    circle(g, x, 58, 14); g.fillStyle = '#ffd166'; g.fill();
+    g.lineWidth = 5; g.strokeStyle = PALETTE.ink; g.stroke();
+    eye(g, x, 58, 9, blink, 0, 1);
+  }
+  // 喙
+  g.beginPath();
+  g.moveTo(64, 68); g.lineTo(57, 77); g.lineTo(71, 77);
+  g.closePath();
+  fs(g, '#ffb347');
+  // 脚
+  g.save();
+  g.strokeStyle = PALETTE.ink;
+  g.lineWidth = 3;
+  g.beginPath();
+  g.moveTo(54, 113); g.lineTo(54, 119);
+  g.moveTo(74, 113); g.lineTo(74, 119);
+  g.stroke();
+  g.restore();
+  blush(g, 38, 72); blush(g, 90, 72);
+}
+
+function drawCamel(g, blink) {
+  // 尾巴
+  g.save();
+  g.lineCap = 'round';
+  g.beginPath();
+  g.moveTo(35, 94);
+  g.bezierCurveTo(16, 100, 17, 82, 28, 82);
+  g.lineWidth = 8; g.strokeStyle = PALETTE.ink; g.stroke();
+  g.lineWidth = 4; g.strokeStyle = '#b9773f'; g.stroke();
+  g.restore();
+  // 腿
+  ellipse(g, 44, 112, 10, 7); fs(g, '#b9773f');
+  ellipse(g, 76, 112, 10, 7); fs(g, '#b9773f');
+  // 身体与驼峰
+  ellipse(g, 56, 95, 27, 19); fs(g, '#d9a066');
+  ellipse(g, 58, 79, 20, 15); fs(g, '#e2b36b');
+  ellipse(g, 58, 99, 16, 10); fs(g, '#f3d3ad');
+  // 脖子与头
+  ellipse(g, 82, 70, 12, 24, .22); fs(g, '#d9a066');
+  ellipse(g, 91, 49, 17, 14); fs(g, '#e2b36b');
+  ellipse(g, 99, 56, 10, 7); fs(g, '#f3d3ad');
+  // 耳朵
+  ellipse(g, 80, 38, 6, 9, -.25); fs(g, '#d9a066');
+  // 眼睛与鼻孔
+  eye(g, 93, 46, 6.5, blink, .3, .8);
+  g.fillStyle = PALETTE.ink;
+  circle(g, 104, 55, 1.8); g.fill();
+  g.save();
+  g.lineWidth = 2.4; g.strokeStyle = PALETTE.ink;
+  g.beginPath();
+  g.arc(99, 59, 6, .2, Math.PI - .2);
+  g.stroke();
+  g.restore();
+  blush(g, 86, 56);
+  // 驼峰高光
+  g.save();
+  g.fillStyle = 'rgba(255,248,231,.42)';
+  ellipse(g, 54, 75, 8, 5, -.3); g.fill();
+  g.restore();
+}
+
+function drawMeerkat(g, blink) {
+  // 尾巴
+  g.save();
+  g.lineCap = 'round';
+  g.beginPath();
+  g.moveTo(76, 101);
+  g.bezierCurveTo(96, 104, 100, 84, 88, 78);
+  g.lineWidth = 7; g.strokeStyle = PALETTE.ink; g.stroke();
+  g.lineWidth = 3.5; g.strokeStyle = '#c49a68'; g.stroke();
+  g.restore();
+  // 身体与肚皮
+  ellipse(g, 64, 94, 18, 24); fs(g, '#d9b382');
+  ellipse(g, 64, 98, 11, 15); fs(g, '#f3dfc2');
+  // 手臂与脚
+  ellipse(g, 44, 92, 7, 15, .3); fs(g, '#c49a68');
+  ellipse(g, 84, 92, 7, 15, -.3); fs(g, '#c49a68');
+  ellipse(g, 52, 114, 9, 5); fs(g, '#c49a68');
+  ellipse(g, 76, 114, 9, 5); fs(g, '#c49a68');
+  // 耳朵
+  circle(g, 45, 43, 8); fs(g, '#c49a68');
+  circle(g, 83, 43, 8); fs(g, '#c49a68');
+  // 头
+  ellipse(g, 64, 58, 23, 21); fs(g, '#e2c195');
+  // 黑眼圈
+  ellipse(g, 53, 57, 8, 9, -.08); fs(g, '#6d5540');
+  ellipse(g, 75, 57, 8, 9, .08); fs(g, '#6d5540');
+  eye(g, 53, 57, 5.5, blink, 0, .8);
+  eye(g, 75, 57, 5.5, blink, 0, .8);
+  // 鼻子与嘴
+  ellipse(g, 64, 67, 5, 3.5); g.fillStyle = PALETTE.ink; g.fill();
+  g.save();
+  g.lineWidth = 2.4; g.strokeStyle = PALETTE.ink;
+  g.beginPath();
+  g.moveTo(64, 70); g.lineTo(64, 73);
+  g.moveTo(64, 73); g.quadraticCurveTo(60, 77, 57, 73);
+  g.moveTo(64, 73); g.quadraticCurveTo(68, 77, 71, 73);
+  g.stroke();
+  g.restore();
+  blush(g, 43, 68); blush(g, 85, 68);
+}
+
 const ANIMAL_DRAW = {
   rabbit: drawRabbit, turtle: drawTurtle, fox: drawFox, cat: drawCat,
-  hedgehog: drawHedgehog, squirrel: drawSquirrel, frog: drawFrog, panda: drawPanda
+  hedgehog: drawHedgehog, squirrel: drawSquirrel, frog: drawFrog, panda: drawPanda,
+  deer: drawDeer, owl: drawOwl, camel: drawCamel, meerkat: drawMeerkat
 };
 
 function getSprite(id, blink = false) {
@@ -1889,6 +2413,143 @@ function getBerrySprite(gold = false) {
   return c;
 }
 
+function drawBlueberry(g, gold) {
+  // 叶子
+  g.save();
+  g.translate(64, 31);
+  for (const [rot, x] of [[-.7, -9], [0, 0], [.7, 9]]) {
+    g.save();
+    g.rotate(rot);
+    ellipse(g, x, -3, 8, 14);
+    g.fillStyle = gold ? '#ffd166' : '#4caf78'; g.fill();
+    g.lineWidth = 4; g.strokeStyle = PALETTE.ink; g.stroke();
+    g.restore();
+  }
+  g.restore();
+  const berries = [[48, 70, 15], [70, 64, 17], [84, 80, 13], [59, 88, 14], [76, 96, 11]];
+  for (const [x, y, r] of berries) {
+    circle(g, x, y, r);
+    fs(g, gold ? '#ffd166' : '#6d8cff');
+    g.fillStyle = 'rgba(255,255,255,.48)';
+    circle(g, x - r * .28, y - r * .30, r * .25); g.fill();
+  }
+}
+
+function drawMoonMushroom(g, gold) {
+  g.save();
+  g.fillStyle = gold ? 'rgba(255,209,102,.30)' : 'rgba(183,156,255,.28)';
+  ellipse(g, 64, 62, 45, 38); g.fill();
+  g.restore();
+  // 菌柄
+  rr(g, 52, 58, 24, 45, 11);
+  fs(g, '#fff3d6');
+  // 菌盖
+  ellipse(g, 64, 53, 32, 21);
+  fs(g, gold ? '#ffd166' : '#b79cff');
+  // 斑点
+  g.fillStyle = gold ? '#fff3d6' : '#f3eaff';
+  for (const [x, y, r] of [[50, 48, 5], [68, 43, 4], [80, 54, 5], [60, 58, 3.5]]) {
+    circle(g, x, y, r); g.fill();
+  }
+  // 高光
+  g.save();
+  g.fillStyle = 'rgba(255,255,255,.35)';
+  ellipse(g, 49, 44, 8, 4, -.4); g.fill();
+  g.restore();
+}
+
+function drawCactusFruit(g, gold) {
+  // 刺
+  g.save();
+  g.strokeStyle = PALETTE.ink;
+  g.lineWidth = 3;
+  for (let i = 0; i < 10; i++) {
+    const a = i * Math.PI * 2 / 10;
+    const x1 = 64 + Math.cos(a) * 25, y1 = 78 + Math.sin(a) * 33;
+    const x2 = 64 + Math.cos(a) * 35, y2 = 78 + Math.sin(a) * 43;
+    g.beginPath(); g.moveTo(x1, y1); g.lineTo(x2, y2); g.stroke();
+  }
+  g.restore();
+  // 果身
+  ellipse(g, 64, 78, 24, 33);
+  fs(g, gold ? '#ffd166' : '#6fcf7d');
+  ellipse(g, 64, 82, 15, 22);
+  g.fillStyle = gold ? '#fff3d6' : '#a8e6a3'; g.fill();
+  // 顶部小花
+  for (let i = 0; i < 5; i++) {
+    const a = i * Math.PI * 2 / 5 - Math.PI / 2;
+    ellipse(g, 64 + Math.cos(a) * 9, 39 + Math.sin(a) * 7, 7, 5, a);
+    fs(g, gold ? '#fff3d6' : '#ff8fab');
+  }
+  circle(g, 64, 39, 5); g.fillStyle = PALETTE.gold; g.fill();
+  g.lineWidth = 3; g.strokeStyle = PALETTE.ink; g.stroke();
+  // 高光
+  g.save();
+  g.fillStyle = 'rgba(255,255,255,.35)';
+  ellipse(g, 54, 69, 7, 13, -.3); g.fill();
+  g.restore();
+}
+
+function drawSunfruit(g, gold) {
+  // 叶子
+  g.save();
+  g.translate(64, 38);
+  g.rotate(-.5);
+  g.beginPath();
+  g.moveTo(0, 0); g.quadraticCurveTo(17, -16, 28, -2); g.quadraticCurveTo(13, 8, 0, 0);
+  fs(g, gold ? '#ffd166' : '#4caf78');
+  g.restore();
+  // 果身
+  circle(g, 64, 80, 30);
+  fs(g, gold ? '#ffd166' : '#ff9f45');
+  circle(g, 64, 80, 21);
+  g.fillStyle = gold ? '#fff3d6' : '#ffd166'; g.fill();
+  // 果瓣线
+  g.save();
+  g.strokeStyle = 'rgba(43,43,60,.35)';
+  g.lineWidth = 3;
+  for (let i = 0; i < 6; i++) {
+    const a = i * Math.PI / 3;
+    g.beginPath();
+    g.moveTo(64, 80);
+    g.lineTo(64 + Math.cos(a) * 19, 80 + Math.sin(a) * 19);
+    g.stroke();
+  }
+  g.restore();
+  // 籽与高光
+  g.fillStyle = gold ? '#c68a12' : '#ff5d73';
+  for (const [x, y] of [[56, 70], [72, 72], [64, 87], [50, 86], [78, 88]]) {
+    ellipse(g, x, y, 2.5, 3.5, .2); g.fill();
+  }
+  g.save();
+  g.fillStyle = 'rgba(255,255,255,.38)';
+  ellipse(g, 51, 65, 7, 11, -.4); g.fill();
+  g.restore();
+}
+
+const FOOD_DRAW = {
+  blueberry: drawBlueberry,
+  moonMushroom: drawMoonMushroom,
+  cactusFruit: drawCactusFruit,
+  sunfruit: drawSunfruit
+};
+
+function getFoodSprite(food = 'berry', gold = false) {
+  if (food === 'berry' || !FOOD_DRAW[food]) return getBerrySprite(gold);
+  const ck = 'food_' + food + (gold ? '_gold' : '');
+  if (spriteCache.has(ck)) return spriteCache.get(ck);
+  const c = document.createElement('canvas');
+  c.width = c.height = SPRITE;
+  const g = c.getContext('2d');
+  g.lineJoin = 'round';
+  g.lineCap = 'round';
+  g.strokeStyle = PALETTE.ink;
+  g.lineWidth = 7;
+  FOOD_DRAW[food](g, gold);
+  spriteCache.set(ck, c);
+  return c;
+}
+
 /* ---------- 蛇头 ---------- */
 function drawSnakeHead(g, cx, cy, size, dir, t, blink, opts = {}) {
   const scale = size / SPRITE;
@@ -1984,18 +2645,20 @@ function drawSnakeHead(g, cx, cy, size, dir, t, blink, opts = {}) {
 
 /* ---------- 背景 ---------- */
 function buildBackground(w, h, dpr) {
+  const map = currentMap();
+  const th = map.theme;
   const c = document.createElement('canvas');
   c.width = Math.max(1, Math.round(w * dpr));
   c.height = Math.max(1, Math.round(h * dpr));
   const g = c.getContext('2d');
   g.setTransform(dpr, 0, 0, dpr, 0, 0);
-  g.fillStyle = PALETTE.grassA;
+  g.fillStyle = th.baseA;
   g.fillRect(0, 0, w, h);
   const cell = w / CONFIG.grid;
   for (let y = 0; y < CONFIG.grid; y++) {
     for (let x = 0; x < CONFIG.grid; x++) {
       const hsh = hash2(x, y);
-      const base = (x + y) % 2 === 0 ? PALETTE.grassA : PALETTE.grassB;
+      const base = (x + y) % 2 === 0 ? th.baseA : th.baseB;
       g.fillStyle = base;
       g.fillRect(x * cell, y * cell, cell + .5, cell + .5);
       if (hsh > .72) {
@@ -2006,38 +2669,127 @@ function buildBackground(w, h, dpr) {
       }
     }
   }
-  // 细草与小花
-  for (let y = 0; y < CONFIG.grid; y++) {
-    for (let x = 0; x < CONFIG.grid; x++) {
-      const hsh = hash2(x + 11, y + 7);
-      if (hsh < .885) continue;
-      const cx = (x + .25 + hash2(x, y + 3) * .5) * cell;
-      const cy = (y + .3 + hash2(x + 4, y) * .45) * cell;
-      g.save();
-      g.translate(cx, cy);
-      g.strokeStyle = 'rgba(47,125,88,.28)';
-      g.lineWidth = Math.max(1, cell * .035);
-      g.beginPath();
-      g.moveTo(0, cell * .14); g.lineTo(0, 0);
-      g.moveTo(0, cell * .08); g.lineTo(-cell * .08, -cell * .02);
-      g.moveTo(0, cell * .08); g.lineTo(cell * .08, -cell * .01);
-      g.stroke();
-      if (hsh > .965) {
-        g.fillStyle = hsh > .985 ? 'rgba(255,255,255,.55)' : 'rgba(255,209,102,.5)';
-        circle(g, 0, -cell * .05, cell * .045);
-        g.fill();
+
+  if (map.deco === 'grass') {
+    // 细草与小花
+    for (let y = 0; y < CONFIG.grid; y++) {
+      for (let x = 0; x < CONFIG.grid; x++) {
+        const hsh = hash2(x + 11, y + 7);
+        if (hsh < .885) continue;
+        const cx = (x + .25 + hash2(x, y + 3) * .5) * cell;
+        const cy = (y + .3 + hash2(x + 4, y) * .45) * cell;
+        g.save();
+        g.translate(cx, cy);
+        g.globalAlpha = .30;
+        g.strokeStyle = th.leaf;
+        g.lineWidth = Math.max(1, cell * .035);
+        g.beginPath();
+        g.moveTo(0, cell * .14); g.lineTo(0, 0);
+        g.moveTo(0, cell * .08); g.lineTo(-cell * .08, -cell * .02);
+        g.moveTo(0, cell * .08); g.lineTo(cell * .08, -cell * .01);
+        g.stroke();
+        g.globalAlpha = .52;
+        if (hsh > .965) {
+          g.fillStyle = hsh > .985 ? 'rgba(255,255,255,.55)' : th.accent;
+          circle(g, 0, -cell * .05, cell * .045);
+          g.fill();
+        }
+        g.restore();
       }
-      g.restore();
+    }
+  } else if (map.deco === 'forest') {
+    // 蕨叶、蘑菇与萤火
+    for (let y = 0; y < CONFIG.grid; y++) {
+      for (let x = 0; x < CONFIG.grid; x++) {
+        const hsh = hash2(x + 31, y + 19);
+        if (hsh < .84) continue;
+        const cx = (x + .22 + hash2(x + 5, y) * .56) * cell;
+        const cy = (y + .28 + hash2(x, y + 8) * .48) * cell;
+        g.save();
+        g.translate(cx, cy);
+        if (hsh > .965) {
+          g.globalAlpha = .52;
+          g.strokeStyle = th.ink;
+          g.lineWidth = Math.max(1.5, cell * .045);
+          g.beginPath(); g.moveTo(0, 0); g.lineTo(0, -cell * .13); g.stroke();
+          g.fillStyle = th.accent;
+          g.beginPath();
+          g.ellipse(0, -cell * .14, cell * .13, cell * .07, 0, Math.PI, Math.PI * 2);
+          g.fill();
+          g.globalAlpha = .72;
+          g.fillStyle = 'rgba(255,248,231,.7)';
+          circle(g, -cell * .05, -cell * .15, cell * .025); g.fill();
+        } else {
+          g.globalAlpha = .25;
+          g.strokeStyle = th.leaf;
+          g.lineWidth = Math.max(1, cell * .028);
+          for (let k = 0; k < 3; k++) {
+            g.beginPath();
+            g.moveTo(0, cell * .14);
+            g.quadraticCurveTo((k - 1) * cell * .10, cell * .02, (k - 1) * cell * .17, -cell * .09);
+            g.stroke();
+          }
+        }
+        g.restore();
+      }
+    }
+    for (let y = 0; y < CONFIG.grid; y++) {
+      for (let x = 0; x < CONFIG.grid; x++) {
+        const hsh = hash2(x + 51, y + 29);
+        if (hsh < .93) continue;
+        const cx = (x + .2 + hash2(x + 7, y) * .6) * cell;
+        const cy = (y + .2 + hash2(x, y + 6) * .6) * cell;
+        g.save();
+        g.globalAlpha = .35 + (hsh - .93) * 3;
+        g.fillStyle = th.accent;
+        circle(g, cx, cy, cell * .035); g.fill();
+        g.globalAlpha = .10;
+        circle(g, cx, cy, cell * .12); g.fill();
+        g.restore();
+      }
+    }
+  } else {
+    // 沙纹、卵石与仙人掌
+    for (let y = 0; y < CONFIG.grid; y++) {
+      for (let x = 0; x < CONFIG.grid; x++) {
+        const hsh = hash2(x + 41, y + 23);
+        if (hsh < .86) continue;
+        const cx = (x + .2 + hash2(x + 2, y) * .6) * cell;
+        const cy = (y + .3 + hash2(x, y + 4) * .5) * cell;
+        g.save();
+        g.translate(cx, cy);
+        if (hsh > .965) {
+          g.globalAlpha = .32;
+          g.strokeStyle = th.leaf;
+          g.lineWidth = Math.max(2, cell * .045);
+          g.lineCap = 'round';
+          g.beginPath();
+          g.moveTo(0, cell * .13); g.lineTo(0, -cell * .10);
+          g.moveTo(0, cell * .02); g.lineTo(-cell * .08, -cell * .02);
+          g.moveTo(0, cell * .04); g.lineTo(cell * .08, -cell * .05);
+          g.stroke();
+        } else {
+          g.globalAlpha = .16;
+          g.strokeStyle = th.ink;
+          g.lineWidth = Math.max(1, cell * .025);
+          g.beginPath();
+          g.moveTo(-cell * .18, cell * .02);
+          g.bezierCurveTo(-cell * .08, -cell * .08, cell * .06, cell * .08, cell * .20, -cell * .02);
+          g.stroke();
+        }
+        g.restore();
+      }
     }
   }
+
   // 四周内阴影
   const vg = g.createRadialGradient(w / 2, h / 2, w * .32, w / 2, h / 2, w * .72);
   vg.addColorStop(0, 'rgba(43,43,60,0)');
-  vg.addColorStop(1, 'rgba(43,43,60,.14)');
+  vg.addColorStop(1, th.vignette);
   g.fillStyle = vg;
   g.fillRect(0, 0, w, h);
   // 内框
-  g.strokeStyle = 'rgba(43,43,60,.16)';
+  g.strokeStyle = th.frame;
   g.lineWidth = Math.max(2, cell * .12);
   g.strokeRect(cell * .10, cell * .10, w - cell * .20, h - cell * .20);
   return c;
@@ -2187,14 +2939,20 @@ function findFreeCell(opts = {}) {
   return null;
 }
 function weightedAnimal() {
+  const pool = (currentMap().animals || ANIMAL_ORDER).filter(id => ANIMALS[id]);
+  const ids = pool.length ? pool : ANIMAL_ORDER;
   let total = 0;
-  for (const id of ANIMAL_ORDER) total += ANIMALS[id].weight;
+  for (const id of ids) total += ANIMALS[id].weight;
   let r = Math.random() * total;
-  for (const id of ANIMAL_ORDER) {
+  for (const id of ids) {
     r -= ANIMALS[id].weight;
     if (r <= 0) return id;
   }
-  return 'rabbit';
+  return ids[0] || 'rabbit';
+}
+function pickFood() {
+  const foods = (currentMap().foods || ['berry']).filter(id => FOODS[id]);
+  return foods.length ? choice(foods) : 'berry';
 }
 function spawnAnimal(id, initial = false) {
   if (state.animals.length >= CONFIG.maxAnimals) return false;
@@ -2218,6 +2976,7 @@ function spawnBerry(gold, initial = false) {
   if (!cell) return false;
   state.berries.push({
     x: cell.x, y: cell.y,
+    food: pickFood(),
     gold: gold === undefined ? Math.random() < derived.goldChance : !!gold,
     born: state.elapsed,
     phase: rand(0, 10)
@@ -2227,7 +2986,7 @@ function spawnBerry(gold, initial = false) {
 function spawnBerryAt(x, y) {
   if (state.berries.length >= CONFIG.maxBerries) return false;
   if (x >= 0 && y >= 0 && x < CONFIG.grid && y < CONFIG.grid && !isOccupied(x, y)) {
-    state.berries.push({ x, y, gold: Math.random() < derived.goldChance, born: state.elapsed, phase: rand(0, 10) });
+    state.berries.push({ x, y, food: pickFood(), gold: Math.random() < derived.goldChance, born: state.elapsed, phase: rand(0, 10) });
     return true;
   }
   return spawnBerry();
@@ -2266,6 +3025,7 @@ function appendSegment(id, avoid = null) {
   // 先在队尾补一个空节段，再把收服的动物放到蛇头后的第一个空节段。
   // 这样第一只头像会紧贴蛇头，不会在开头留下两格空身段。
   state.snake.push({ x:cell.x, y:cell.y, px:cell.x, py:cell.y, species:null });
+  settings.stats.maxLength = Math.max(settings.stats.maxLength || 3, state.snake.length);
   if (id) {
     for (let i = 1; i < state.snake.length; i++) {
       if (!state.snake[i].species) { state.snake[i].species = id; break; }
@@ -2289,6 +3049,7 @@ function gainExp(n) {
     need = expNeed(state.level);
   }
   if (state.level > before) {
+    settings.stats.maxLevel = Math.max(settings.stats.maxLevel || 1, state.level);
     Sfx.levelup();
     const c = cellCenter(state.snake[0].x, state.snake[0].y);
     burstAt(c.x, c.y, PALETTE.gold, 16, { speed: 190, life: .8, shape: 'star', size: 5 });
@@ -2317,16 +3078,20 @@ function captureAnimal(animal, source = 'head', avoid = null) {
     addFloat(cell.x, cell.y - 12, '+15', PALETTE.ink, 13);
   }
 
+  const firstDiscovery = recordCodex(id, state.species[id] || 1);
+  if (firstDiscovery && state.screen === 'playing') state.introQueue.push(id);
+  settings.stats.captures = (settings.stats.captures || 0) + 1;
   state.captures++;
   state.score += CONFIG.captureScore * derived.scoreMul;
   syncStats();
-  gainExp(CONFIG.captureExp * derived.foxMul);
+  const expGain = (CONFIG.captureExp + derived.captureExpBonus) * derived.foxMul;
+  gainExp(expGain);
 
   const scoreGain = Math.round(CONFIG.captureScore * derived.scoreMul);
   burstAt(cell.x, cell.y, ANIMALS[id].accent, 11, { speed: 160, life: .65, size: 4 });
   burstAt(cell.x, cell.y, PALETTE.gold, 4, { speed: 100, life: .5, shape: 'star', size: 4 });
   addFloat(cell.x, cell.y - 10, '+' + scoreGain, PALETTE.ink, 14);
-  addFloat(cell.x + 13, cell.y - 24, '+' + Math.round(CONFIG.captureExp * derived.foxMul) + ' EXP', PALETTE.leaf, 10);
+  addFloat(cell.x + 13, cell.y - 24, '+' + Math.round(expGain) + ' EXP', PALETTE.leaf, 10);
   Sfx.capture(ANIMAL_ORDER.indexOf(id));
   syncStats();
   updateHud();
@@ -2342,7 +3107,9 @@ function captureAnimal(animal, source = 'head', avoid = null) {
     }
   }
 
-  state.animalTimer = Math.min(state.animalTimer > 0 ? state.animalTimer : 99, rand(CONFIG.animalRespawnMin, CONFIG.animalRespawnMax) * derived.spawnMul);
+  state.animalTimer = Math.min(state.animalTimer > 0 ? state.animalTimer : 99, rand(CONFIG.animalRespawnMin, CONFIG.animalRespawnMax) * derived.spawnMul * derived.animalSpawnMul);
+  persist();
+  checkAchievements();
   return true;
 }
 
@@ -2352,17 +3119,26 @@ function collectBerry(berry) {
   state.berries.splice(idx, 1);
   const cell = cellCenter(berry.x, berry.y);
   const gold = berry.gold;
-  const baseExp = gold ? CONFIG.goldBerryExp : CONFIG.berryExp;
+  const food = FOODS[berry.food] || FOODS.berry;
+  const baseExp = gold ? food.goldExp : food.exp;
   const expMul = derived.foxMul * (buffLevel('golden') ? (gold ? 3 : 1) : 1) * derived.feastMul;
   const exp = baseExp * expMul;
-  const score = (gold ? CONFIG.goldBerryScore : CONFIG.berryScore) * derived.scoreMul;
+  const score = (gold ? food.goldScore : food.score) * derived.scoreMul;
   state.score += score;
   state.berriesEaten++;
-  if (gold) state.goldEaten++;
+  settings.stats.foods = (settings.stats.foods || 0) + 1;
+  if (gold) {
+    state.goldEaten++;
+    settings.stats.goldFoods = (settings.stats.goldFoods || 0) + 1;
+  }
   gainExp(exp);
+  if (food.shield && state.shield.max > 0 && state.shield.cur < state.shield.max) {
+    state.shield.cur = Math.min(state.shield.max, state.shield.cur + food.shield);
+    addFloat(cell.x + 12, cell.y - 24, '护盾 +' + food.shield, PALETTE.sky, 10);
+  }
 
-  burstAt(cell.x, cell.y, gold ? PALETTE.gold : PALETTE.pink, gold ? 12 : 6, { speed: 110, life: .5, size: 3 });
-  addFloat(cell.x, cell.y - 8, '+' + Math.round(score), gold ? '#b8860b' : PALETTE.pink, gold ? 15 : 12);
+  burstAt(cell.x, cell.y, gold ? PALETTE.gold : food.accent, gold ? 12 : 6, { speed: 110, life: .5, size: 3 });
+  addFloat(cell.x, cell.y - 8, '+' + Math.round(score), gold ? '#b8860b' : food.accent, gold ? 15 : 12);
   Sfx.berry(gold);
 
   if (derived.squirrelChance > 0 && Math.random() < derived.squirrelChance) {
@@ -2370,6 +3146,8 @@ function collectBerry(berry) {
     showToast('松鼠又找到一颗！', 'good');
   }
   state.berryTimer = Math.min(state.berryTimer > 0 ? state.berryTimer : 99, rand(CONFIG.berryRespawnMin, CONFIG.berryRespawnMax));
+  persist();
+  checkAchievements();
   updateHud();
 }
 
@@ -2685,7 +3463,7 @@ function tick() {
   if (state.animals.length < CONFIG.maxAnimals) {
     state.animalTimer -= dt;
     if (state.animalTimer <= 0) {
-      state.animalTimer = spawnAnimal() ? rand(1.4, 2.8) * derived.spawnMul : .45;
+      state.animalTimer = spawnAnimal() ? rand(1.4, 2.8) * derived.spawnMul * derived.animalSpawnMul : .45;
     }
   }
   if (state.berries.length < CONFIG.maxBerries) {
@@ -2696,15 +3474,16 @@ function tick() {
   }
   state.rockTimer -= dt;
   if (state.rockTimer <= 0) {
-    state.rockTimer = CONFIG.rockInterval;
+    state.rockTimer = derived.rockInterval;
     spawnRock();
   }
 
   state.score += dt;
+  updateHud();
+  if (showNextIntro()) return;
   if (state.pendingLevels > 0) {
     openLevelUp();
   }
-  updateHud();
 }
 
 /* ---------- 升级卡 ---------- */
@@ -2778,6 +3557,9 @@ function die(reason = 'self') {
   const isNew = final > settings.bestScore;
   if (isNew) settings.bestScore = final;
   settings.runs++;
+  settings.stats.bestTime = Math.max(settings.stats.bestTime || 0, state.elapsed);
+  settings.stats.maxLevel = Math.max(settings.stats.maxLevel || 1, state.level);
+  settings.stats.maxLength = Math.max(settings.stats.maxLength || 3, state.snake.length);
   persist();
   state.best = settings.bestScore;
   state.newBest = isNew;
@@ -2789,14 +3571,17 @@ function die(reason = 'self') {
   burstAt(c.x, c.y, PALETTE.orange, 16, { speed: 170, life: .8, size: 4, shape: 'star' });
   updateGameOver(isNew);
   updateTitleStats();
+  checkAchievements();
   setScreen('gameover');
   updateReviveUI();
   setRankNote('');
   submitScore(final, (ok, err) => {
-    if (!state || state.screen !== 'gameover') return;
+    if (!state || (state.screen !== 'gameover' && state.screen !== 'intro')) return;
     if (ok) setRankNote('本局 ' + final + ' 分已上传排行榜', 'good');
     else if (PLATFORM.inClient) setRankNote('分数上传失败：' + (err || '未知错误'), 'bad');
   });
+  // 如果这只新动物是在致命碰撞的同一 tick 收服的，结算后再补上初见介绍。
+  if (state.introQueue.length) openIntro(state.introQueue[0], 'gameover');
 }
 
 /* ============================================================
@@ -2921,7 +3706,7 @@ function drawGame(now) {
       ctx.fill();
     }
     drawShadow(ctx, p.x, p.y + cell * .30, cell * .17, cell * .06);
-    ctx.drawImage(getBerrySprite(b.gold), p.x - size / 2, p.y - size / 2 + bob, size, size);
+    ctx.drawImage(getFoodSprite(b.food || 'berry', b.gold), p.x - size / 2, p.y - size / 2 + bob, size, size);
   }
 
   // 岩石
@@ -3138,10 +3923,227 @@ function updateBuffbar() {
   dom.buffbar.classList.toggle('hidden', active.length === 0);
 }
 
+function isMapUnlocked(map) {
+  if (!map) return false;
+  return settings.runs >= map.unlock.runs && settings.bestScore >= map.unlock.best;
+}
+function selectedMapId() {
+  const id = settings.selectedMap;
+  if (MAPS[id] && isMapUnlocked(MAPS[id])) return id;
+  return 'grass';
+}
+function renderMapPicker() {
+  if (!dom.mapCards) return;
+  const selected = selectedMapId();
+  if (settings.selectedMap !== selected) {
+    settings.selectedMap = selected;
+    if (state) state.mapId = selected;
+  }
+  dom.mapCards.innerHTML = MAP_ORDER.map(id => {
+    const map = MAPS[id];
+    const unlocked = isMapUnlocked(map);
+    const active = id === selected;
+    const animals = (map.featuredAnimals || []).map(a => ANIMALS[a] ? ANIMALS[a].name : '').filter(Boolean).join(' · ');
+    const foods = (map.foods || []).map(f => FOODS[f] ? FOODS[f].name : '').filter(Boolean).join(' · ');
+    const lock = unlocked ? '已解锁' : '需 ' + map.unlock.runs + ' 局 + ' + map.unlock.best + ' 分';
+    return '<button type="button" class="map-card' + (active ? ' active' : '') + (unlocked ? '' : ' locked') +
+      '" data-map="' + id + '"' + (unlocked ? '' : ' disabled') + ' aria-pressed="' + active + '" title="' + map.desc + '">' +
+      '<span class="map-top"><span class="map-icon">' + map.icon + '</span><span class="map-name">' + map.name + '</span><span class="map-tag">' + map.tag + '</span></span>' +
+      '<span class="map-meta">动物：' + animals + '</span>' +
+      '<span class="map-meta">食物：' + foods + '</span>' +
+      '<span class="map-lock">' + lock + '</span>' +
+    '</button>';
+  }).join('');
+  dom.mapProgress.textContent = '已玩 ' + settings.runs + ' 局 · 最佳 ' + settings.bestScore + ' 分';
+  dom.btnStart.textContent = '开始游戏 · ' + MAPS[selected].name;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', MAPS[selected].theme.baseA);
+}
+function chooseMap(id) {
+  const map = MAPS[id];
+  if (!map || !isMapUnlocked(map)) return false;
+  settings.selectedMap = id;
+  persist();
+  if (state) state.mapId = id;
+  rebuildBackground();
+  renderMapPicker();
+  Sfx.ui();
+  return true;
+}
 function updateTitleStats() {
   dom.bestTitle.textContent = settings.bestScore;
   dom.runsTitle.textContent = settings.runs;
   dom.bestGameover.textContent = settings.bestScore;
+  updateHubButtons();
+  renderMapPicker();
+}
+
+/* ---------- 图鉴 + 成就 ---------- */
+function codexCount() {
+  return Object.keys(settings.codex || {}).length;
+}
+function achievementCount() {
+  return ACH_ORDER.filter(id => settings.achievements && settings.achievements[id]).length;
+}
+function updateHubButtons() {
+  if (!dom.btnCodex || !dom.btnAchievements) return;
+  dom.btnCodex.textContent = '图鉴 ' + codexCount() + '/' + ANIMAL_ORDER.length;
+  dom.btnAchievements.textContent = '成就 ' + achievementCount() + '/' + ACH_ORDER.length;
+}
+function codexEntry(id) {
+  const e = settings.codex && settings.codex[id];
+  if (!e) return null;
+  return typeof e === 'number' ? { lv:e, captures:1 } : e;
+}
+function recordCodex(id, level) {
+  const first = !settings.codex[id];
+  const old = settings.codex[id];
+  if (old) {
+    const e = typeof old === 'number' ? { lv:old, captures:1 } : old;
+    e.lv = Math.max(Number(e.lv) || 0, level);
+    e.captures = (Number(e.captures) || 0) + 1;
+    settings.codex[id] = e;
+  } else {
+    settings.codex[id] = { lv:level, captures:1 };
+  }
+  return first;
+}
+function achievementProgress(a) {
+  try { return Math.max(0, Number(a.progress()) || 0); }
+  catch (e) { return 0; }
+}
+let achToastTimer = 0;
+function notifyAchievements(ids) {
+  if (!dom.achToast) return;
+  const names = ids.map(id => ACHIEVEMENTS[id] && ACHIEVEMENTS[id].name).filter(Boolean);
+  if (!names.length) return;
+  dom.achToast.innerHTML = '<span class="ach-toast-icon">🏆</span><span><b>成就解锁</b> · ' + names.join('、') + '</span>';
+  dom.achToast.classList.remove('hidden');
+  clearTimeout(achToastTimer);
+  achToastTimer = setTimeout(() => dom.achToast.classList.add('hidden'), 3000);
+}
+function checkAchievements() {
+  const unlocked = [];
+  for (const id of ACH_ORDER) {
+    if (settings.achievements[id]) continue;
+    const a = ACHIEVEMENTS[id];
+    if (!a) continue;
+    if (achievementProgress(a) >= a.target) {
+      settings.achievements[id] = true;
+      unlocked.push(id);
+    }
+  }
+  if (unlocked.length) {
+    persist();
+    updateHubButtons();
+    notifyAchievements(unlocked);
+    if (state && state.screen === 'achievements') renderAchievements();
+  }
+  return unlocked;
+}
+function renderCodex() {
+  if (!dom.codexGrid) return;
+  const seen = codexCount();
+  dom.codexSub.textContent = '已发现 ' + seen + ' / ' + ANIMAL_ORDER.length + ' · 收服后记录能力';
+  dom.codexGrid.innerHTML = ANIMAL_ORDER.map(id => {
+    const animal = ANIMALS[id];
+    const entry = codexEntry(id);
+    const rarity = RARITY[animal.rarity];
+    const maps = MAP_ORDER.filter(mid => MAPS[mid].animals.includes(id)).map(mid => MAPS[mid].name).join(' / ');
+    const meta = entry
+      ? '出没：' + maps + ' · 最高 Lv.' + entry.lv + ' · 收服 ' + entry.captures + ' 次'
+      : '出没：' + maps;
+    return '<div class="codex-card' + (entry ? '' : ' locked') + '">' +
+      '<canvas data-animal="' + id + '" width="64" height="64" aria-hidden="true"></canvas>' +
+      '<div class="codex-body">' +
+        '<div class="codex-top"><b>' + (entry ? animal.name : '？？？') + '</b>' +
+          '<span class="codex-rarity">' + (entry ? rarity.label : '未发现') + '</span></div>' +
+        '<p class="codex-desc">' + (entry ? animal.desc : '在对应地图收服它，解锁能力记录。') + '</p>' +
+        '<span class="codex-meta">' + meta + '</span>' +
+      '</div></div>';
+  }).join('');
+  dom.codexGrid.querySelectorAll('canvas[data-animal]').forEach(c => {
+    const g = c.getContext('2d');
+    g.clearRect(0, 0, c.width, c.height);
+    g.drawImage(getSprite(c.dataset.animal, false), 0, 0, c.width, c.height);
+  });
+}
+function renderAchievements() {
+  if (!dom.achList) return;
+  const doneCount = achievementCount();
+  dom.achSub.textContent = '已解锁 ' + doneCount + ' / ' + ACH_ORDER.length;
+  dom.achList.innerHTML = ACH_ORDER.map(id => {
+    const a = ACHIEVEMENTS[id];
+    const p = Math.min(a.target, achievementProgress(a));
+    const done = !!settings.achievements[id] || p >= a.target;
+    const pct = Math.max(0, Math.min(100, a.target ? p / a.target * 100 : 0));
+    const count = a.time
+      ? formatTime(p) + ' / ' + formatTime(a.target)
+      : p + (a.unit || '') + ' / ' + a.target + (a.unit || '');
+    return '<div class="ach-card' + (done ? ' done' : '') + '">' +
+      '<div class="ach-icon">' + a.icon + '</div>' +
+      '<div class="ach-body">' +
+        '<div class="ach-line"><b>' + a.name + '</b>' + (done ? '<span class="codex-rarity">已解锁</span>' : '') + '</div>' +
+        '<p class="ach-desc">' + a.desc + '</p>' +
+        '<div class="ach-progress"><div class="ach-track"><div class="ach-fill" style="width:' + pct.toFixed(1) + '%"></div></div>' +
+          '<span class="ach-count">' + (done ? '完成' : count) + '</span></div>' +
+      '</div></div>';
+  }).join('');
+}
+function showCodex() {
+  renderCodex();
+  setScreen('codex');
+  Sfx.ui();
+}
+function showAchievements() {
+  checkAchievements();
+  renderAchievements();
+  setScreen('achievements');
+  Sfx.ui();
+}
+function renderIntro(id) {
+  const animal = ANIMALS[id];
+  if (!animal || !dom.introSprite) return;
+  dom.introName.textContent = animal.name;
+  dom.introRarity.textContent = RARITY[animal.rarity].label;
+  dom.introDesc.textContent = animal.desc;
+  dom.introNote.textContent = '已收入图鉴，之后可以在标题页查看能力。';
+  const g = dom.introSprite.getContext('2d');
+  g.clearRect(0, 0, dom.introSprite.width, dom.introSprite.height);
+  g.drawImage(getSprite(id, false), 0, 0, dom.introSprite.width, dom.introSprite.height);
+}
+function openIntro(id, resume = 'playing') {
+  renderIntro(id);
+  settleSnake();
+  state.queue.length = 0;
+  state.acc = 0;
+  state.introResume = resume;
+  setScreen('intro');
+  Sfx.obj();
+}
+function showNextIntro() {
+  if (!state || !state.introQueue.length || state.screen !== 'playing') return false;
+  openIntro(state.introQueue[0], 'playing');
+  return true;
+}
+function closeIntro() {
+  if (!state || state.screen !== 'intro') return;
+  state.introQueue.shift();
+  if (state.introQueue.length) {
+    renderIntro(state.introQueue[0]);
+    Sfx.ui();
+    return;
+  }
+  if (state.introResume === 'gameover') {
+    state.introResume = 'playing';
+    setScreen('gameover');
+  } else if (state.pendingLevels > 0) {
+    openLevelUp();
+  } else {
+    state.acc = 0;
+    setScreen('playing');
+  }
+  Sfx.ui();
 }
 function updateSettingsUI() {
   dom.chkShake.checked = settings.shake;
@@ -3185,6 +4187,7 @@ function setScreen(name) {
   }
   if (name === 'gameover') {
     updateTitleStats();
+    updateReviveUI();
   }
 }
 
@@ -3192,22 +4195,25 @@ function startRun() {
   Sfx.unlock();
   const best = settings.bestScore;
   state = createState();
+  state.mapId = selectedMapId();
   state.best = best;
   state.screen = 'playing';
   resetHudCache();
   derived = deriveStats();
   syncStats();
+  rebuildBackground();
   for (let i = 0; i < CONFIG.startAnimals; i++) spawnAnimal(null, true);
   for (let i = 0; i < CONFIG.startBerries; i++) spawnBerry(undefined, true);
-  state.animalTimer = rand(1.2, 2.2);
+  state.animalTimer = rand(1.2, 2.2) * derived.animalSpawnMul;
   state.berryTimer = rand(1.2, 2.2);
+  state.rockTimer = derived.rockInterval;
   state.acc = 0;
   dom.boardWrap.classList.remove('slow');
   updateHud();
   updateCollection();
   updateBuffbar();
   setScreen('playing');
-  showToast('收服动物，壮大尾巴！');
+  showToast(MAPS[state.mapId].name + ' · 收服动物，壮大尾巴！');
   Sfx.ui();
 }
 
@@ -3292,6 +4298,7 @@ function updateGameOver(isNew) {
     ? rows.map(([id, lv]) => '<span class="species-tag">' + ANIMALS[id].name + ' Lv.' + lv + '</span>').join('')
     : '<span class="species-tag">还没收服动物</span>';
   dom.bestGameover.textContent = settings.bestScore;
+  if (dom.mapGameover) dom.mapGameover.textContent = MAPS[state.mapId] ? MAPS[state.mapId].name : '阳光草原';
 }
 
 /* ============================================================
@@ -3354,15 +4361,26 @@ function onKey(e) {
   } else if (state.screen === 'title') {
     if (k === 'enter' || k === ' ') { e.preventDefault(); return requestStart(); }
     if (k === 'h') return showHowto();
+    if (k === 'c') return showCodex();
+    if (k === 'j') return showAchievements();
   } else if (state.screen === 'howto') {
     if (k === 'enter') { e.preventDefault(); return beginFromHowto(); }
     if (k === 'escape') return goTitle();
+  } else if (state.screen === 'codex' || state.screen === 'achievements') {
+    if (k === 'escape') return goTitle();
+  } else if (state.screen === 'intro') {
+    if (k === 'enter' || k === ' ' || k === 'escape') { e.preventDefault(); return closeIntro(); }
   }
 }
 
 function bindEvents() {
   dom.btnStart.addEventListener('click', requestStart);
   dom.btnHowto.addEventListener('click', showHowto);
+  dom.btnCodex.addEventListener('click', showCodex);
+  dom.btnAchievements.addEventListener('click', showAchievements);
+  dom.btnCodexBack.addEventListener('click', goTitle);
+  dom.btnAchBack.addEventListener('click', goTitle);
+  dom.btnIntroClose.addEventListener('click', closeIntro);
   dom.btnHowtoBack.addEventListener('click', goTitle);
   dom.btnHowtoStart.addEventListener('click', beginFromHowto);
   dom.btnSoundTitle.addEventListener('click', toggleSound);
@@ -3378,6 +4396,13 @@ function bindEvents() {
   dom.btnRankTitle.addEventListener('click', () => { openLeaderboard(); });
   dom.btnRankOver.addEventListener('click', () => { openLeaderboard(); });
   dom.btnReviveAd.addEventListener('click', reviveFromAd);
+
+  if (dom.mapCards) {
+    dom.mapCards.addEventListener('click', e => {
+      const btn = e.target.closest('[data-map]');
+      if (btn) chooseMap(btn.dataset.map);
+    });
+  }
 
   dom.chkShake.addEventListener('change', () => {
     settings.shake = dom.chkShake.checked;
@@ -3455,11 +4480,7 @@ function updateDebugPanel(now) {
     ' | lives ' + state.lives + '\n' +
     'frog ' + state.cooldowns.frog.toFixed(1) + ' | hedge ' + state.cooldowns.hedge.toFixed(1) +
     ' | blade ' + state.cooldowns.blade.toFixed(1) + '\n' +
-    'slow ' + state.slow.toFixed(1) + ' | inv ' + state.invuln.toFixed(1) + ' | god ' + (debug.god ? 'ON' : 'off') + '\n' +
-    'ads ' + (PLATFORM.adsReady ? 'ready:' + PLATFORM.adSpaceId : 'off') +
-    ' | waiter ' + (rewardedWaiter ? 'wait' : '-') +
-    ' | last ' + (lastAdResult ? (lastAdResult.ok ? 'ok' : (lastAdResult.reason || 'fail')) : '-') +
-    ' | revive ' + state.adRevives + '/' + CONFIG.adReviveLimit;
+    'slow ' + state.slow.toFixed(1) + ' | inv ' + state.invuln.toFixed(1) + ' | god ' + (debug.god ? 'ON' : 'off');
 }
 
 let lastFrame = performance.now();
@@ -3495,6 +4516,7 @@ function boot() {
   updateTitleStats();
   bindEvents();
   setScreen('title');
+  checkAchievements();
   resize();
   setTimeout(resize, 120);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => resize()).catch(() => {});
@@ -3504,8 +4526,38 @@ function boot() {
 
 /* 测试 / 调试接口 */
 window.__tailzoo = {
+  get version() { return CONFIG.version; },
   get state() { return state; },
   get derived() { return derived; },
+  maps: MAPS,
+  foods: FOODS,
+  achievements: ACHIEVEMENTS,
+  get codex() { return { ...settings.codex }; },
+  get achievementState() { return { ...settings.achievements }; },
+  get stats() { return { ...settings.stats }; },
+  get mapId() { return state.mapId; },
+  selectMap(id) { return chooseMap(id); },
+  setProgress(runs, best) {
+    settings.runs = Math.max(0, Math.floor(Number(runs) || 0));
+    settings.bestScore = Math.max(0, Math.floor(Number(best) || 0));
+    if (state) {
+      state.best = settings.bestScore;
+      if (!isMapUnlocked(MAPS[state.mapId])) state.mapId = selectedMapId();
+    }
+    persist();
+    updateTitleStats();
+    checkAchievements();
+    rebuildBackground();
+    return true;
+  },
+  unlockAll() {
+    settings.runs = Math.max(settings.runs, ...MAP_ORDER.map(id => MAPS[id].unlock.runs));
+    settings.bestScore = Math.max(settings.bestScore, ...MAP_ORDER.map(id => MAPS[id].unlock.best));
+    persist();
+    updateTitleStats();
+    checkAchievements();
+    return true;
+  },
   start: startRun,
   forceLevelUp() { state.pendingLevels++; openLevelUp(); },
   grantBuff(id) {
@@ -3523,6 +4575,9 @@ window.__tailzoo = {
     return a ? captureAnimal(a) : false;
   },
   die(reason = 'debug') { die(reason); },
+  closeIntro,
+  showCodex,
+  showAchievements,
   setGod(v) { debug.god = !!v; },
   queue(dx, dy) { queueDir(dx, dy); },
   tick() { tick(); },
@@ -3538,6 +4593,9 @@ window.__tailzoo = {
   snapshot() {
     return {
       screen: state.screen,
+      mapId: state.mapId,
+      grid: CONFIG.grid,
+      mapName: MAPS[state.mapId] ? MAPS[state.mapId].name : '',
       score: Math.floor(state.score),
       length: state.snake.length,
       level: state.level,
@@ -3546,17 +4604,19 @@ window.__tailzoo = {
       pending: state.pendingLevels,
       captures: state.captures,
       species: { ...state.species },
+      codex: { ...settings.codex },
+      achievements: { ...settings.achievements },
+      stats: { ...settings.stats },
       buffs: { ...state.buffs },
       shield: { ...state.shield },
       lives: state.lives,
       animals: state.animals.map(a => ({ id:a.id, x:a.x, y:a.y })),
-      berries: state.berries.map(b => ({ x:b.x, y:b.y, gold:b.gold })),
+      berries: state.berries.map(b => ({ x:b.x, y:b.y, gold:b.gold, food:b.food || 'berry' })),
       rocks: [...state.rocks],
       tickMs: state.tickMs,
-      elapsed: state.elapsed,
-      grid: CONFIG.grid,
       adRevives: state.adRevives,
       adsReady: PLATFORM.adsReady,
+      elapsed: state.elapsed,
       deaths: state.lastDeath
     };
   }
