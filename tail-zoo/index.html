@@ -650,14 +650,25 @@ function openLeaderboard() {
    激励视频（广告位 1054324，由 MCP check_ads_status 竖屏匹配返回）
    · 启动时预加载；show() 失败时 load() 后只重试一次
    · 看完（res.isEnded）才算成功，提前关闭不发奖励
+   · 超时只用于「广告还没拉起来」阶段；广告一旦开始播放，改用长兜底，
+     否则 15 秒的短超时会在视频播放中把发奖回调清掉（真机踩过这个坑）
    ------------------------------------------------------------ */
-const REWARD_TIMEOUT_MS = 15000;
+const AD_SHOW_TIMEOUT_MS = 15000;    // 等待广告拉起
+const AD_PLAY_GUARD_MS = 180000;     // 广告播放中的兜底（正常不会触发）
+
 let rewardedAd = null;
 let rewardedWaiter = null;
 let rewardedTimer = 0;
+let lastAdResult = null;
+
+function armRewardTimer(ms) {
+  if (rewardedTimer) clearTimeout(rewardedTimer);
+  rewardedTimer = setTimeout(() => settleRewarded({ ok: false, reason: 'ad-timeout' }), ms);
+}
 
 function settleRewarded(result) {
   if (rewardedTimer) { clearTimeout(rewardedTimer); rewardedTimer = 0; }
+  lastAdResult = result;
   const fn = rewardedWaiter;
   rewardedWaiter = null;
   if (typeof fn === 'function') fn(result);
@@ -687,7 +698,9 @@ function initRewardedAd() {
       settleRewarded({ ok: false, reason: 'ad-error' });
     });
     rewardedAd.onClose(res => {
-      const ended = !!(res && res.isEnded);
+      // 兼容多种宿主返回：{isEnded:true} / true / 无参数（视为看完，否则真人看完也可能不发奖）
+      const ended = res === true || res == null || res.isEnded === true;
+      console.info('[tailzoo] 激励视频关闭', JSON.stringify(res));
       settleRewarded({ ok: ended, reason: ended ? 'ended' : 'closed-early' });
       safeAdLoad(rewardedAd);
     });
@@ -711,18 +724,24 @@ function showRewarded(placement, done) {
   if (!ad) { finish({ ok: false, reason: 'ad-init-failed' }); return; }
 
   rewardedWaiter = finish;
-  rewardedTimer = setTimeout(() => settleRewarded({ ok: false, reason: 'ad-timeout' }), REWARD_TIMEOUT_MS);
+  armRewardTimer(AD_SHOW_TIMEOUT_MS);
 
+  // 广告成功拉起后改用长兜底：播放期间等 onClose，不再受 15 秒限制
+  const playing = () => { if (rewardedWaiter) armRewardTimer(AD_PLAY_GUARD_MS); };
   const retryOnce = () => {
     Promise.resolve(safeAdLoad(ad))
       .then(() => ad.show())
+      .then(playing)
       .catch(err => {
         console.warn('[tailzoo] 激励视频重试失败', err);
         settleRewarded({ ok: false, reason: 'ad-show-failed' });
       });
   };
-  const shown = ad.show();
-  if (shown && typeof shown.catch === 'function') shown.catch(retryOnce);
+
+  let shown = null;
+  try { shown = ad.show(); } catch (e) { shown = null; }
+  if (shown && typeof shown.then === 'function') shown.then(playing, retryOnce);
+  else playing();   // 老宿主不返回 Promise，直接按「已拉起」处理
 }
 
 /* ============================================================
@@ -761,7 +780,7 @@ const CONFIG = {
   lateGameAt: 120,
   maxParticles: 220,
   maxFloats: 14,
-  version: '1.3.0'
+  version: '1.4.0'
 };
 
 const PALETTE = {
@@ -2477,32 +2496,42 @@ function reviveFromAd() {
   if (btn) { btn.disabled = true; btn.textContent = '广告加载中…'; }
   showRewarded('revive', res => {
     if (btn) { btn.disabled = false; btn.textContent = '看视频复活'; }
-    if (state.screen !== 'gameover') {
-      if (res && res.ok) state.adRevives++;
-      return;
-    }
     if (!res || !res.ok) {
-      setRankNote('广告暂时不可用，请稍后再试', 'bad');
+      const why = res && res.reason;
+      if (why === 'closed-early') setRankNote('看完完整广告才能复活哦', 'bad');
+      else if (why === 'ad-timeout') setRankNote('广告响应超时，再试一次吧', 'bad');
+      else if (why === 'ad-busy') setRankNote('广告还在加载，稍等一下', 'bad');
+      else setRankNote('广告暂时不可用，请稍后再试', 'bad');
+      updateReviveUI();
       return;
     }
-    state.adRevives++;
-    state.score = Math.floor(state.score);
-    state.screen = 'playing';
-    doRevive(state.lastDeath, 0.5, '广告复活！继续冲');
-    state.dir = pickSafeDir();
-    state.queue.length = 0;
-    state.acc = 0;
-    state.best = settings.bestScore;
-    setRankNote('');
-    resetHudCache();
-    derived = deriveStats();
-    syncStats();
-    updateHud();
-    updateCollection();
-    updateBuffbar();
-    setScreen('playing');
-    syncDpad();
-    Sfx.revive();
+    if (state.screen !== 'gameover') { state.adRevives++; return; }
+    try {
+      state.adRevives++;
+      state.score = Math.floor(state.score);
+      state.screen = 'playing';
+      doRevive(state.lastDeath, 0.5, '广告复活！继续冲');
+      state.dir = pickSafeDir();
+      state.queue.length = 0;
+      state.acc = 0;
+      state.best = settings.bestScore;
+      setRankNote('');
+      resetHudCache();
+      derived = deriveStats();
+      syncStats();
+      updateHud();
+      updateCollection();
+      updateBuffbar();
+      setScreen('playing');
+      syncDpad();
+      Sfx.revive();
+    } catch (e) {
+      console.error('[tailzoo] 复活失败', e);
+      state.screen = 'gameover';
+      setScreen('gameover');
+      setRankNote('复活失败，请再试一次', 'bad');
+      updateReviveUI();
+    }
   });
 }
 
@@ -3426,7 +3455,11 @@ function updateDebugPanel(now) {
     ' | lives ' + state.lives + '\n' +
     'frog ' + state.cooldowns.frog.toFixed(1) + ' | hedge ' + state.cooldowns.hedge.toFixed(1) +
     ' | blade ' + state.cooldowns.blade.toFixed(1) + '\n' +
-    'slow ' + state.slow.toFixed(1) + ' | inv ' + state.invuln.toFixed(1) + ' | god ' + (debug.god ? 'ON' : 'off');
+    'slow ' + state.slow.toFixed(1) + ' | inv ' + state.invuln.toFixed(1) + ' | god ' + (debug.god ? 'ON' : 'off') + '\n' +
+    'ads ' + (PLATFORM.adsReady ? 'ready:' + PLATFORM.adSpaceId : 'off') +
+    ' | waiter ' + (rewardedWaiter ? 'wait' : '-') +
+    ' | last ' + (lastAdResult ? (lastAdResult.ok ? 'ok' : (lastAdResult.reason || 'fail')) : '-') +
+    ' | revive ' + state.adRevives + '/' + CONFIG.adReviveLimit;
 }
 
 let lastFrame = performance.now();
@@ -3501,6 +3534,7 @@ window.__tailzoo = {
   initRewardedAd,
   reviveFromAd,
   adsReady() { return PLATFORM.adsReady; },
+  get lastAdResult() { return lastAdResult; },
   snapshot() {
     return {
       screen: state.screen,

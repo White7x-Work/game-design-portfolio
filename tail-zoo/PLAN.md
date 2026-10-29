@@ -663,6 +663,12 @@ function frame(now) {
 
 ## 12. 交付物与完成定义
 
+**v1.4.0 交付物（广告复活修复版）**
+
+1. `tail-zoo/index.html`：18×18 棋盘 + 排行榜 + 激励视频复活（修复「看完广告不复活」）。
+2. `tail-zoo/dist/tail-zoo-v1.4.0/index.html`：待上传产物（不自动发布、不自动提交审核）。
+3. `tail-zoo/tools/verify-taptap.mjs`：38 项自动化验收（含「超过 15 秒仍发奖」「onClose 无参数也发奖」）。
+
 **v1.3.0 交付物（广告接通版）**
 
 1. `tail-zoo/index.html`：18×18 棋盘 + 排行榜 + 真实激励视频复活（广告位 `1054324`）。
@@ -745,7 +751,8 @@ function frame(now) {
 - 奖励：原地复活，保留分数，蛇身修剪到 50%，2 秒无敌，自动清除头部周围 3 格岩石，方向改为朝向棋盘中心的**安全格**（不与蛇身/岩石/边界重叠）。
 - 就绪条件：`PLATFORM.adsReady = adsEnabled && adSpaceId && tap`；未就绪时按钮整块隐藏，避免出现点不动的假广告入口。
 - 调试：`?admock=1` 模拟 1.2 秒激励视频，用于浏览器内验证完整链路。
-- **实现**（v1.3.0）：启动时 `tap.createRewardedVideoAd({ adUnitId: PLATFORM.adSpaceId })` 预加载；`show()` 失败 → `load()` → 只重试一次；15s 超时兜底；`onClose` 中 `res.isEnded === true` 才发奖励，提前关闭不发。
+- **实现**（v1.4.0）：启动时 `tap.createRewardedVideoAd({ adUnitId: PLATFORM.adSpaceId })` 预加载；`show()` 失败 → `load()` → 只重试一次；**超时只用于「拉起广告」阶段（15s）**，`show()` 成功后换 180s 长兜底，播放中由 `onClose` 发奖；`onClose` 兼容 `{isEnded:true}` / `true` / 无参数，明确 `isEnded:false` 才不发。
+- **真机教训**：v1.3.0 从 `show()` 起算 15s 超时，而激励视频常播 15–30s，超时抢先清空发奖回调 → 看完广告不复活。v1.4.0 已修，并由 E2E「广告超过 15 秒仍正常发奖」锁死。
 - **真机验证**：以上只验证了调用契约（headless + 假 `tap`），广告能否真正播放必须在 TapTap 客户端内实测。
 
 ### 14.5 验收
@@ -755,4 +762,4 @@ function frame(now) {
 
 ---
 
-**下一步：v1.3.0 产物已就绪（排行榜 + 激励视频全部接通），可直接上传；广告播放效果需在 TapTap 客户端真机实测。**
+**下一步：v1.4.0 产物已就绪（广告复活超时修复）；上传到 TapTap 草稿版本后，在手机客户端实测「看完广告能复活」。**

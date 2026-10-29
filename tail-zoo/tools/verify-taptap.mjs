@@ -246,7 +246,12 @@ try {
             load() { return failMode() ? undefined : Promise.resolve(); },
             show() {
               if (failMode()) return Promise.reject(new Error('ad not ready'));
-              setTimeout(() => { if (h.close) h.close({ isEnded: window.__adEnded === true }); }, 40);
+              const delay = window.__adDelay || 40;
+              setTimeout(() => {
+                if (!h.close) return;
+                if (window.__adRes === 'none') h.close();
+                else h.close({ isEnded: window.__adEnded === true });
+              }, delay);
               return Promise.resolve();
             },
             destroy() {}
@@ -294,6 +299,18 @@ try {
   const early = await page.eval("new Promise(res => __tailzoo.showRewarded('test', res))");
   check('提前关闭不发奖励', early.ok === false && early.reason === 'closed-early', JSON.stringify(early));
   await page.eval('window.__adEnded = true');
+
+  // 回归：广告播放超过 15 秒（旧实现的短超时会把发奖回调清掉 → 看完不复活）
+  await page.eval('window.__adDelay = 16500');
+  const slow = await page.eval("new Promise(res => __tailzoo.showRewarded('test', res))");
+  check('广告超过 15 秒仍正常发奖', slow.ok === true, JSON.stringify(slow));
+  await page.eval('window.__adDelay = 40');
+
+  // 兼容宿主 onClose 不带参数的情况
+  await page.eval("window.__adRes = 'none'");
+  const noRes = await page.eval("new Promise(res => __tailzoo.showRewarded('test', res))");
+  check('onClose 无参数也发奖', noRes.ok === true, JSON.stringify(noRes));
+  await page.eval("window.__adRes = 'obj'");
 
   // show() 失败 → load() 重试一次仍失败：安全收敛，不抛错（load 返回 undefined）
   await page.eval("window.__adMode = 'fail'");

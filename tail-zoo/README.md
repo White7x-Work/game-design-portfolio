@@ -61,12 +61,12 @@ node tools/serve.mjs
 - 结算时自动 `submitScores` 提交本局分数；标题页 / 结算页的「排行榜」按钮调用 `openLeaderboard`。
 - 普通浏览器（无 `tap`）里所有接口静默降级，不会报错，离线玩法不受影响。
 - 广告位 ID 只能来自 TapTap MCP `check_ads_status` 的返回，**禁止从后台手填或复用其他应用**。
-- 激励视频：启动时 `createRewardedVideoAd` 预加载；`show()` 失败时 `load()` 后只重试一次；`onClose` 里 `res.isEnded === true` 才发奖励，提前关闭不给复活。
+- 激励视频：启动时 `createRewardedVideoAd` 预加载；`show()` 失败时 `load()` 后只重试一次；**超时只覆盖「拉起广告」阶段（15s），播放中由 `onClose` 决定**；`onClose` 给 `{isEnded:true}` / `true` / 无参数都算看完，明确 `isEnded:false` 才不发复活。
 - 本地模拟一次激励视频：`index.html?admock=1`（只在浏览器里模拟，真机走真实广告位）。
 - 上传方式：**H5 上传**（入口 `index.html`）。本作是 DOM + Canvas 页面，不能按 TapTap 小游戏打包——小游戏要求 `game.js` / `game.json` / `project.config.json` 且运行环境没有 `window`、`DOM`、`BOM`。
 - 压缩包结构：平台要求 **zip 根目录下套一个游戏目录**，其内才是 `index.html`：
   ```
-  tail-zoo-v1.3.0.zip
+  tail-zoo-v1.4.0.zip
   └── tail-zoo/
       └── index.html
   ```
@@ -82,7 +82,7 @@ node tools/serve.mjs
 - `tools/shots.mjs`：窄屏布局截图与溢出检查。
 - `tools/measure-dpad.mjs`：虚拟方向键在各机型下的尺寸 / 居中 / 溢出测量。
 - `screenshots/`：390×844 与 360×640 的标题页 / 结算页截图。
-- `dist/tail-zoo-v1.3.0/`：当前待上传产物（TapTap H5 上传目录）；`v1.2.0` / `v1.1.0` 为历史版本。
+- `dist/tail-zoo-v1.4.0/`：当前待上传产物（TapTap H5 上传目录）；`v1.3.0` / `v1.2.0` / `v1.1.0` 为历史版本。
 - `backups/tail-zoo-v1.0.1.html`：上一版发布快照。
 - `backups/tail-zoo-v1.0.0.html`：首版历史快照。
 
